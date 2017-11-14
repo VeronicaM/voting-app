@@ -1,0 +1,1 @@
+export { PollsApi } from './api/polls.api';

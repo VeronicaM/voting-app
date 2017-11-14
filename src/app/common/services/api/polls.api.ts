@@ -5,7 +5,8 @@ import { of } from 'rxjs/observable/of';
 import { map, tap } from 'rxjs/operators';
 
 import {
-  IPoll
+  IPoll,
+  IVote
 } from '../../models';
 
 
@@ -13,7 +14,20 @@ import {
 export class PollsApi {
   constructor(private http: HttpClient) { }
   all(): Observable<IPoll[]> {
-    return this.http
-      .get('/api/polls/');
+    return this.http.get<IPoll[]>('/api/polls/')
+    .pipe(map(polls => polls.map(poll => {
+        return {
+            _id: poll._id,
+            text: poll.text,
+            options: poll.options,
+            userId: poll.userId,
+            votes: poll.votes.map(vote => {
+                return {
+                    option: vote.option,
+                    value: vote.value
+                };
+            })
+        };
+    })));
   }
 }

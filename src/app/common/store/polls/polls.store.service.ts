@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as reducers from '../app.store';
-import * as pollsActions from './polls.actions';
+import * as pollsActions from './actions/polls.actions';
 
 import {
     getPolls
@@ -12,7 +12,7 @@ export class PollsStoreService {
     polls$ = this.store.select(getPolls);
     constructor(private store: Store<reducers.AppState>) { }
 
-    getPolls(questionId) {
+    getPolls() {
         this.store.dispatch(new pollsActions.GetPolls());
     }
 }

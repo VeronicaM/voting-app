@@ -1,2 +1,2 @@
 export * from './app.store';
-export { PollsEffects } from './polls';
+export { PollsEffects, PollsStoreService } from './polls';

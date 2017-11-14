@@ -3,8 +3,13 @@
 var mongoose = require('mongoose');
 
 var PollSchema = new mongoose.Schema({
-    question: String,
-    options: [String]
+    text: String,
+    options: [String],
+    votes: [String],
+    user_id: {
+        type: Number,
+        ref: 'User'
+    }
 });
 PollSchema.virtual('id').get(function() {
     return this._id;

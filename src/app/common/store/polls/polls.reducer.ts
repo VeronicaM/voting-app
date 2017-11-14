@@ -1,15 +1,23 @@
-import { Action } from '@ngrx/store';
-export interface PollState {
-    polls: string[];
+import { IPoll } from '../../models/polls.model';
+import * as actions from './actions/polls.actions';
+
+
+export interface State {
+  polls: IPoll[];
 }
 
-export function reducer(state: string = 'Hello World', action: Action) {
-    switch (action.type) {
-        case 'SPANISH':
-            return state = 'Hola Mundo'
-        case 'FRENCH':
-            return state = 'Bonjour le monde'
-        default:
-            return state;
+export const initialState: State = {
+  polls: []
+};
+
+export function reducer(state = initialState, action: any): State {
+  switch (action.type) {
+    case actions.ActionTypes.GET_POLLS_SUCCESS:
+      return Object.assign({}, state, {
+        polls: action.payload
+      });
+    default: {
+      return state;
     }
+  }
 }

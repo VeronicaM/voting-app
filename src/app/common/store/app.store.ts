@@ -1,4 +1,4 @@
-import * as login from './login/login.reducer';
+//import * as login from './login/login.reducer';
 import * as polls from './polls/polls.reducer';
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -6,11 +6,11 @@ import * as polls from './polls/polls.reducer';
  */
 
 export interface AppState {
-    polls: polls.PollState;
+    polls: polls.State;
 }
 
 
 export const reducers = {
-    login: login.reducer,
+   // login: login.reducer,
     polls: polls.reducer
 };

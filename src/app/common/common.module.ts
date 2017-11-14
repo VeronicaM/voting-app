@@ -1,19 +1,24 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
-import { AppServicesModule } from './services/services.module';
 import { AppComponentsModule } from './components/components.module';
-
+import {
+    PollsApi
+  } from './services';
+  import {
+    PollsStoreService
+  } from './store';
 @NgModule({
   imports: [
-      AppServicesModule,
       AppComponentsModule
   ],
   declarations: [
   ],
   providers: [
-  ],
+    PollsStoreService,
+    PollsApi
+],
   exports: [
-      AppServicesModule, AppComponentsModule
+     AppComponentsModule
   ]
 })
 export class AppCommonModule {}

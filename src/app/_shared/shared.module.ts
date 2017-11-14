@@ -24,8 +24,6 @@ import {
 } from '@angular/material';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { AppCardComponent, AppImportFileComponent, AppConfirmDialogComponent } from './components';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -35,10 +33,7 @@ import { AppCardComponent, AppImportFileComponent, AppConfirmDialogComponent } f
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatDialogModule],
-  declarations: [
-    AppCardComponent,
-    AppImportFileComponent,
-    AppConfirmDialogComponent],
+  declarations: [],
   exports: [
     CommonModule,
     RouterModule,
@@ -63,9 +58,8 @@ import { AppCardComponent, AppImportFileComponent, AppConfirmDialogComponent } f
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatSlideToggleModule,
-    AppCardComponent
+    MatSlideToggleModule
   ],
-  entryComponents: [AppImportFileComponent, AppConfirmDialogComponent]
+  entryComponents: []
 })
 export class SharedModule { }

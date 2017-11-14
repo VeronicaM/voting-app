@@ -1,39 +1,51 @@
 import 'hammerjs';
+import './rxjs.imports';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
-
-import { StoreModule, Store } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-
-import { environment } from '../environments/environment';
-import { AppCommonModule } from './common/common.module';
-import { reducers } from './common/store/app.store';
-import { AppRoutingModule } from './app-routing.module';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { Router } from '@angular/router';
 import {
   PollsEffects
 } from './common/store';
+import { reducers } from './common/store/app.store';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './pages/login/login.component';
 import { SharedModule } from './_shared/shared.module';
+import {AppCommonModule} from './common/common.module';
+import { InterceptedHttp } from './config/http.interceptor';
+import {DashboardComponent} from './pages/dashboard/dashboard.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     BrowserAnimationsModule,
-    HttpModule,
-    EffectsModule.forRoot([PollsEffects]),
+    HttpClientModule,
+    SharedModule,
+    AppCommonModule,
     StoreModule.forRoot(reducers),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production
+      ? StoreDevtoolsModule.instrument()
+      : [],
+    EffectsModule.forRoot([
+     PollsEffects
+    ]),
+    AppRoutingModule,
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: InterceptedHttp,
+    multi: true
+  }],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

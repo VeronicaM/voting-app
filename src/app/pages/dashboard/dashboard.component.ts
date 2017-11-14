@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PollsStoreService} from '../../common/store';
 
 @Component({
   selector: 'voting-dashboard',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+   polls;
+  constructor(private pollService: PollsStoreService) { }
 
   ngOnInit() {
+    this.pollService.getPolls();
+    this.polls = this.pollService.polls$;
   }
 
 }
