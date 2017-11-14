@@ -1,0 +1,19 @@
+'use strict';
+
+var app = require('express');
+var path = require('path');
+var controller = require('./user.controller');
+var auth = require('../../auth/auth.service');
+var router = new app.Router();
+
+
+router.get('/', auth.hasRole('admin'), controller.index);
+router.delete('/:id', auth.hasRole('admin'), controller.destroy);
+router.get('/me', auth.isAuthenticated(), controller.me);
+router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
+router.post('/reset-password/:token', controller.resetPass);
+router.get('/:id', auth.isAuthenticated(), controller.show);
+router.post('/', controller.create);
+router.post('/forgot-password', controller.forgotPass);
+router.get('/reset/:token', controller.resetPassword);
+module.exports = router;
