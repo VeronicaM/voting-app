@@ -1,5 +1,6 @@
 import 'hammerjs';
 import './rxjs.imports';
+import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -40,6 +41,13 @@ import {DashboardComponent} from './pages/dashboard/dashboard.component';
     EffectsModule.forRoot([
      PollsEffects
     ]),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+        }
+      }
+    }),
     AppRoutingModule,
   ],
   providers: [{

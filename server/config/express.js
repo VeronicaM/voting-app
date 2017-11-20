@@ -28,7 +28,7 @@
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
         app.use(session({
-            secret: 'MemoRe Super Secret Session Key',
+            secret: 'Voting App Super Secret Session Key',
             saveUninitialized: true,
             resave: true
         }));
@@ -45,10 +45,11 @@
 
         if ('development' === env || 'test' === env) {
 
-            app.use(require('connect-livereload')());
-            app.use(express.static(path.join(config.root, '.tmp')));
-            app.use(express.static(path.join(config.root, 'dist')));
-            app.set('appPath', path.join(config.root, 'dist'));
+            //      app.use(require('connect-livereload')());
+            // app.use(express.static(path.join(config.root, '.tmp')));
+            // app.use(express.static(path.join(config.root, 'dist')));
+            // app.set('appPath', path.join(config.root, 'dist'));
+            app.set('appPath', path.join(config.root, 'src'));
             app.use(morgan('dev'));
             app.use(errorHandler()); // Error handler - has to be last
         }

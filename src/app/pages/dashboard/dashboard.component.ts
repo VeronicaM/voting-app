@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PollsStoreService} from '../../common/store';
 
 @Component({
-  selector: 'voting-dashboard',
+  selector: 'app-voting-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
