@@ -13,7 +13,7 @@ export class LoginApi {
     private http: HttpClient,
     private authService: AuthTokenService) { }
 
-  getCurrentUser(): User {
+  getCurrentUser() {
     return this.currentUser;
   }
 

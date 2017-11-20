@@ -38,7 +38,6 @@ export class LoginVComponent {
         this.router.navigate([appConstants.routes.POLLS]);
       },
       (error) => {
-        console.log(error);
         this.isLoggingIn = false;
         if (error.status === appConstants.errorCode.Unauthorized) {
           this.errorMessage = constants.wrongCredentials;

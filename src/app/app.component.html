@@ -1,1 +1,6 @@
-<router-outlet></router-outlet>
+<app-top-bar [hidden]="!canShowNavigation()" [isOpen]="isOpen" [loggedUser]="loginApi.getCurrentUser()" (onOpenMenu)="openMenu($event)" (logout)="logout()">
+</app-top-bar>
+<div class="app-container" role="application">
+    <router-outlet></router-outlet>
+    <app-footer *ngIf="canShowFooter()"></app-footer>
+</div>

@@ -39,7 +39,9 @@ export class InterceptedHttp implements HttpInterceptor {
                         res.status === appConstants.errorCode.Forbidden)) {
                     // handle authorization errors
                     this.authService.removeStoredToken();
-                    this.injector.get(Router).navigate(['/login']);
+                    if (this.router.url.indexOf("go") === -1) {
+                        this.router.navigate([appConstants.routes.LOGIN]);
+                    }
                 }
                 return Observable.throw(res);
             }));

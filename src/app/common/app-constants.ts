@@ -7,7 +7,7 @@ const appConstants = {
     },
     routes: {
         LANDING: 'landing',
-        LOGIN: 'login',
+        LOGIN: 'go/login',
         POLLS: 'dashboard',
         QUESTION_SET_DETAILS: 'questionSetDetails',
         TOPICS: 'topics',

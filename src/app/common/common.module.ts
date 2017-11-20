@@ -1,30 +1,41 @@
 import { NgModule } from '@angular/core';
-import { AuthenticationGuard } from './guards/authentication.guard';  
-import { AppComponentsModule } from './components/components.module';
+import { AuthenticationGuard } from './guards/authentication.guard';
+import { UserDetailResolver } from './guards/user-details.resolver';
+import { AppTopBarComponent } from './components/app-top-bar/app-top-bar.component';
+import { AppFooterComponent } from './components/app-footer/app-footer.component';
+import {
+  SharedModule
+} from '../_shared/shared.module';
 import {
     PollsApi,
     LoginApi,
-    AuthTokenService
+    AuthTokenService,
+    NotificationService,
   } from './services';
   import {
-    PollsStoreService
+    PollsStoreService,
+    LoginStoreService
   } from './store';
 
 @NgModule({
-  imports: [
-      AppComponentsModule
-  ],
+  imports: [SharedModule],
   declarations: [
+    AppFooterComponent,
+    AppTopBarComponent
   ],
   providers: [
     PollsStoreService,
+    LoginStoreService,
     PollsApi,
     LoginApi,
     AuthTokenService,
-    AuthenticationGuard
+    NotificationService,
+    AuthenticationGuard,
+    UserDetailResolver
 ],
   exports: [
-     AppComponentsModule
+    AppFooterComponent,
+    AppTopBarComponent
   ]
 })
 export class AppCommonModule {}

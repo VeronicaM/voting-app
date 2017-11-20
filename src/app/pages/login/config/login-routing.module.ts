@@ -9,11 +9,11 @@ import { NgModule } from '@angular/core';
 
 export const loginChildRoutes: Routes = [
   {
-    path: 'login',
+    path: 'go',
     component: LoginComponent,
     children: [
-      { path: '', redirectTo: 'voting-app', pathMatch: 'full',   canActivate: [AuthenticationGuard] },
-      { path: 'voting-app', component: LoginVComponent, data: { 'title': 'Login' },  canActivate: [AuthenticationGuard] },
+      { path: '', redirectTo: 'login', pathMatch: 'full'},
+      { path: 'login', component: LoginVComponent, data: { 'title': 'Login' },  canActivate: [AuthenticationGuard] },
       { path: 'signup', component: SignupVComponent, data: { 'title': 'Signup' },  canActivate: [AuthenticationGuard] },
       { path: 'google', component: GoogleComponent,  canActivate: [AuthenticationGuard] }
     ]

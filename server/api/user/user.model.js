@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
 var UserSchema = new mongoose.Schema({
-    name: String,
+    name: { type: String, required: true },
     email: {
         type: String,
         lowercase: true,
@@ -18,8 +18,6 @@ var UserSchema = new mongoose.Schema({
     password: {
         type: String
     },
-    gravatar: String,
-    avatar: String,
     provider: String,
     salt: String,
     google: {},
