@@ -40,7 +40,6 @@ export class InterceptedHttp implements HttpInterceptor {
                     // handle authorization errors
                     this.authService.removeStoredToken();
                     this.injector.get(Router).navigate(['/login']);
-                    return new EmptyObservable();
                 }
                 return Observable.throw(res);
             }));

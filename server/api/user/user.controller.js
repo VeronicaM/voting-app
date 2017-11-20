@@ -37,7 +37,14 @@ exports.index = function(req, res) {
  * Creates a new user
  */
 exports.create = function(req, res) {
-
+    var newUser = new User(req.body);
+    newUser.provider = 'local';
+    newUser.role = 'user';
+    newUser.save(function(err, user) {
+        if (err) return validationError(res, err);
+        var token = jwt.sign({ _id: user._id }, config.secrets.session);
+        res.json({ token: token });
+    });
 }
 
 /**
@@ -119,7 +126,14 @@ exports.resetPass = function(req, res) {
      * Get my info
      */
 exports.me = function(req, res, next) {
-
+    var userId = req.user._id;
+    User.findOne({
+        _id: userId
+    }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
+        if (err) return next(err);
+        if (!user) return res.status(401).send('Unauthorized');
+        res.json(user);
+    });
 }
 
 /**

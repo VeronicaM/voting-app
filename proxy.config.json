@@ -4,5 +4,11 @@
         "secure": false,
         "changeOrigin": "true",
         "logLevel": "debug"
+    },
+    "/auth/*": {
+        "target": "http://localhost:80",
+        "secure": false,
+        "changeOrigin": "true",
+        "logLevel": "debug"
     }
 }

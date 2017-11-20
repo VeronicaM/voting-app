@@ -1,3 +1,20 @@
-<p>
-  login works!
-</p>
+<div class="loginComponent">
+  <div class="content">
+    <div class="banner">
+      <h1 class="title"><a [routerLink]="['/landing']" matTooltip="Go to Landing Page">Voting App FCC</a></h1>
+      <small>Create your own polls or vote on polls created by the community</small>
+      <div><img class="logo" src="/../../../assets/images/vote.png" alt='logo'></div>
+    </div>
+    <div class='LoginContainer'>
+      <router-outlet>
+      </router-outlet>
+    </div>
+
+  </div>
+  <footer class="footer">
+    <div>
+      <p>Voting App | 2017 |  | <a href="https://github.com/VeronicaM/voting-app/issues">Issues</a>
+      </p>
+    </div>
+  </footer>
+</div>

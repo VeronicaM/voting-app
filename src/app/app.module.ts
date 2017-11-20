@@ -12,6 +12,7 @@ import {
   PollsEffects
 } from './common/store';
 import { reducers } from './common/store/app.store';
+import {LoginModule} from './pages/login/login.module';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +28,7 @@ import {DashboardComponent} from './pages/dashboard/dashboard.component';
   ],
   imports: [
     BrowserModule,
+    LoginModule,
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
