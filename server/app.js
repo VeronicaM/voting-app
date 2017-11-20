@@ -25,6 +25,7 @@ mongoose.connection.on('error', function(err) {
 // Setup server
 var app = express();
 var server = require('http').createServer(app);
+
 require('./config/express').appExpress(app);
 require('./routes')(app);
 // Start server

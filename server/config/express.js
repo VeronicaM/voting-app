@@ -37,18 +37,12 @@
         app.use(passport.initialize());
 
         if ('production' === env) {
-            app.use(favicon(path.join(config.root, 'dist', 'favicon.ico')));
             app.use(express.static(path.join(config.root, 'dist')));
-            console.log("config.root", config.root);
+            app.use(favicon(path.join(config.root, 'dist', 'favicon.ico')));
             app.set('appPath', path.join(config.root, 'dist'));
         }
 
         if ('development' === env || 'test' === env) {
-
-            //      app.use(require('connect-livereload')());
-            // app.use(express.static(path.join(config.root, '.tmp')));
-            // app.use(express.static(path.join(config.root, 'dist')));
-            // app.set('appPath', path.join(config.root, 'dist'));
             app.set('appPath', path.join(config.root, 'src'));
             app.use(morgan('dev'));
             app.use(errorHandler()); // Error handler - has to be last

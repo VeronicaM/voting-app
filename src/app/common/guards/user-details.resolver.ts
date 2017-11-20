@@ -20,11 +20,11 @@ export class UserDetailResolver implements Resolve<User> {
     if (!this.loginApi.getCurrentUser() && this.authTokenService.isLoggedIn()) {
       return this.loginApi.getUserDetails()
         .pipe(catchError(error => {
-          this.router.navigate([AppConstants.routes.LANDING]);
+         // this.router.navigate([AppConstants.routes.POLLS]);
           return of(error);
         }));
     } else if (!this.loginApi.getCurrentUser()) {
-      this.router.navigate([AppConstants.routes.LANDING]);
+      //this.router.navigate([AppConstants.routes.POLLS]);
       return null;
     }
   }
