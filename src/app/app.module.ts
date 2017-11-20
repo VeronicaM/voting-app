@@ -21,7 +21,9 @@ import { SharedModule } from './_shared/shared.module';
 import {AppCommonModule} from './common/common.module';
 import { InterceptedHttp } from './config/http.interceptor';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
-
+export function getTokenFunction() {
+    return localStorage.getItem('token');
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,9 +45,7 @@ import {DashboardComponent} from './pages/dashboard/dashboard.component';
     ]),
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          return localStorage.getItem('token');
-        }
+        tokenGetter: getTokenFunction
       }
     }),
     AppRoutingModule,

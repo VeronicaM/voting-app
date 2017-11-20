@@ -4,9 +4,9 @@
 
 'use strict';
 
-//require('dotenv').config({ silent: process.env.NODE_ENV === 'production' })
-require('dotenv').config();
-// Set default node environment to development
+require('dotenv').config({ silent: process.env.NODE_ENV === 'production' })
+    //require('dotenv').config();
+    // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var express = require('express');
