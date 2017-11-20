@@ -38,7 +38,7 @@
         "@ngrx/effects": "4.1.1",
         "@ngrx/store": "4.1.1",
         "@ngrx/store-devtools": "4.1.1",
-        "angular2-jwt": "^0.2.3",
+        "angular2-jwt": "0.2.3",
         "composable-middleware": "^0.3.0",
         "connect-livereload": "^0.6.0",
         "cookie-parser": "^1.4.3",
