@@ -6,18 +6,9 @@ const appConstants = {
         Forbidden: 403
     },
     routes: {
-        LANDING: 'landing',
+        SIGNUP: 'go/signup',
         LOGIN: 'go/login',
         POLLS: 'dashboard',
-        QUESTION_SET_DETAILS: 'questionSetDetails',
-        TOPICS: 'topics',
-        TOPIC_DETAILS: 'topicDetails',
-        QUOTES: 'quotes',
-        QUOTE_DETAILS: 'quoteDetails',
-        NEW_QUOTE: 'newQuote',
-        PRACTICE_SESSION: 'practiceSession',
-        ANSWERS: 'answers',
-        SESSION_DETAILS: 'sessionDetails',
     },
     ui: {
         PAGE_CONTAINER_CLASS: 'pageContent'

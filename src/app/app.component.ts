@@ -50,7 +50,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   canShowNavigation() {
-    return location.pathname.indexOf(appConstants.routes.LOGIN) === -1;
+    return location.pathname.indexOf(appConstants.routes.LOGIN) === -1 &&
+     location.pathname.indexOf(appConstants.routes.SIGNUP) === -1;
   }
 
   canShowFooter() {
