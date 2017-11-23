@@ -1,25 +1,25 @@
-<mat-toolbar *ngIf="loggedUser" class="mat-elevation-z5">
+<mat-toolbar class="mat-elevation-z5">
     <div class="left large-screen">
         <a routerLink="/questionSets" class="logo">
             <img src="/../../../assets/images/vote.png" alt='logo'>
             <span class="appName">Voting-App</span>
         </a>
-        <nav>
+        <nav *ngIf="loggedUser">
             <ul class='globalMenuLinks'>
                 <li>
                     <a routerLink="/polls" routerLinkActive="activeLink"> 
-         Polls
-        </a>
+                         Polls
+                    </a>
                 </li>
                 <li>
                     <a routerLink="/newPoll" routerLinkActive="activeLink"> 
-            New Poll
-        </a>
+                         New Poll
+                     </a>
                 </li>
             </ul>
         </nav>
     </div>
-    <div class="right">
+    <div *ngIf="loggedUser" class="right">
         <div class="userProfile">
             <button mat-button [matMenuTriggerFor]="menu"><span class="greeting">Hello</span> {{loggedUser?.name}}
         <mat-icon>keyboard_arrow_down</mat-icon> 
@@ -33,5 +33,8 @@
      </button>
         </mat-menu>
         <button mat-button (click)="logoutUser()">Logout <i class="fa fa-sign-out"></i></button>
+    </div>
+    <div *ngIf="!loggedUser" class="right">
+        <button mat-button color="primary" routerLink='/go/login'> Login</button>
     </div>
 </mat-toolbar>
