@@ -20,7 +20,7 @@ var UserSchema = new mongoose.Schema({
     },
     provider: String,
     salt: String,
-    google: {},
+    twitter: {},
     resetPasswordToken: String,
     resetPasswordExpires: Date
 });

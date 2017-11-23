@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
-var redirectDomain = process.env.NODE_ENV === 'development' ? 'http://localhost:9000/' : process.env.DOMAIN;
+var redirectDomain = process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:4200' : process.env.DOMAIN;
 //var oauth = require('../config/express').oauth;
 var localStrategy = require('passport-local');
 
@@ -85,6 +85,6 @@ exports.setTokenCookie = function(req, res) {
         expiresIn: 60 * 60 * 5
     });
     res.cookie('token', token);
-    res.redirect(`${redirectDomain}/google?token=${token}`);
+    res.redirect(`${redirectDomain}/go/${req.user.provider}?token=${token}`);
 }
 exports.isAuthenticated = isAuthenticated;

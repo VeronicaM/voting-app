@@ -1,11 +1,8 @@
 <h1>Log In</h1>
 <hr>
-<div class="google">
-  <button 
-  (click)="loginOauth('google')"
-  mat-button 
-  mat-raised-button><i class="fa fa-google-plus" aria-hidden="true"></i>
-      Log In with Google</button>
+<div class="twitter">
+    <button (click)="loginOauth('twitter')" mat-button mat-raised-button><i class="fa fa-twitter" aria-hidden="true"></i>
+      Log In with Twitter</button>
 </div>
 
 <span class="delimiterLoginMethod">
@@ -13,45 +10,20 @@
        </span>
 
 <form class="loginForm" #loginForm="ngForm">
-  <mat-input-container 
-  dividerColor="{{ (emailVar.touched || emailVar.dirty) && !emailVar.valid ? 'warn' : 'primary' }}">
-    <input 
-    matInput 
-    placeholder="Email" 
-    type="email" 
-    #emailVar="ngModel" 
-    required 
-    name="email" 
-    [(ngModel)]="user.email"
-    (ngModelChange)="valuechange($event)"
-    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
-    <mat-error *ngIf="emailVar.errors?.required">Email is required</mat-error>
-    <mat-error *ngIf="emailVar.errors?.pattern">Email is not valid</mat-error>
-  </mat-input-container>
-  <mat-input-container 
-  dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
-    <input 
-    matInput 
-    placeholder="Password" 
-    type="password" 
-    #passwordVar 
-    required 
-    name="password" 
-    [(ngModel)]="user.password"
-    (ngModelChange)="valuechange($event)">
-    <mat-error>Password is required</mat-error>
-  </mat-input-container>
-  <div class="errorMessage" *ngIf="errorMessage">{{errorMessage}}</div>
-  <button 
-     *ngIf="!isLoggingIn"
-     mat-button
-     mat-raised-button
-     class="loginButton"
-     [disabled]="!loginForm.valid"
-     (click)="login()">Log In
+    <mat-input-container dividerColor="{{ (emailVar.touched || emailVar.dirty) && !emailVar.valid ? 'warn' : 'primary' }}">
+        <input matInput placeholder="Email" type="email" #emailVar="ngModel" required name="email" [(ngModel)]="user.email" (ngModelChange)="valuechange($event)" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+        <mat-error *ngIf="emailVar.errors?.required">Email is required</mat-error>
+        <mat-error *ngIf="emailVar.errors?.pattern">Email is not valid</mat-error>
+    </mat-input-container>
+    <mat-input-container dividerColor="{{ (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid ? 'warn' : 'primary' }}">
+        <input matInput placeholder="Password" type="password" #passwordVar required name="password" [(ngModel)]="user.password" (ngModelChange)="valuechange($event)">
+        <mat-error>Password is required</mat-error>
+    </mat-input-container>
+    <div class="errorMessage" *ngIf="errorMessage">{{errorMessage}}</div>
+    <button *ngIf="!isLoggingIn" mat-button mat-raised-button class="loginButton" [disabled]="!loginForm.valid" (click)="login()">Log In
       </button>
-   <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="isLoggingIn"></mat-progress-spinner>
+    <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="isLoggingIn"></mat-progress-spinner>
 </form>
 <div class="usefulLinks">
-  <a [routerLink]="['../signup']">Sign up now ></a>
+    <a [routerLink]="['../signup']">Sign up now ></a>
 </div>

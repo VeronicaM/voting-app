@@ -8,7 +8,10 @@ module.exports = {
         uri: 'mongodb://' + process.env.MONGO_USER + ':' + process.env.MONGO_PASSWORD + '@ds261755.mlab.com:61755/voting-app'
     },
     'secret': process.env.secret,
-    GOOGLE_ID: process.env.google_id,
-    GOOGLE_SECRET: process.env.google_secret,
+    twitter: {
+        consumerKey: process.env.CONSUMER_KEY,
+        consumerSecret: process.env.CONSUMER_SECRET,
+        callbackURL: "http://127.0.0.1/auth/twitter/callback"
+    },
     seedDB: false
 };

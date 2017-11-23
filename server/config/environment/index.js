@@ -2,7 +2,7 @@
 
 var path = require('path');
 var _ = require('lodash');
-var domainUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:9000/' : process.env.DOMAIN;
+var domainUrl = process.env.NODE_ENV === 'development' ? 'http://127.0.0.1' : process.env.DOMAIN;
 console.log('domainUrl', domainUrl);
 
 function requiredProcessEnv(name) {
@@ -42,10 +42,10 @@ var all = {
             }
         }
     },
-    google: {
-        clientID: process.env.GOOGLE_ID,
-        clientSecret: process.env.GOOGLE_SECRET,
-        callbackURL: domainUrl + 'auth/google/callback'
+    twitter: {
+        consumerKey: process.env.CONSUMER_KEY,
+        consumerSecret: process.env.CONSUMER_SECRET,
+        callbackURL: domainUrl + '/auth/twitter/callback'
     }
 };
 

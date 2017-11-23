@@ -5,11 +5,11 @@ import appConstants from '../../../common/app-constants';
 
 
 @Component({
-  selector: 'app-google',
-  templateUrl: './google.component.html',
-  styleUrls: ['./google.component.scss']
+  selector: 'app-twitter',
+  templateUrl: './twitter.component.html',
+  styleUrls: ['./twitter.component.scss']
 })
-export class GoogleComponent implements OnInit {
+export class TwitterComponent implements OnInit {
 
   constructor(
     private authService: AuthTokenService,
