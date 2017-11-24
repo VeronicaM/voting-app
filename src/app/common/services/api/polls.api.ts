@@ -20,7 +20,6 @@ export class PollsApi {
             _id: poll._id,
             text: poll.text,
             options: poll.options,
-            userId: poll.userId,
             votes: poll.votes.map(vote => {
                 return {
                     option: vote.option,
@@ -29,5 +28,8 @@ export class PollsApi {
             })
         };
     })));
+  }
+  createPoll(newPoll) {
+      return this.http.post<IPoll>('/api/polls', newPoll);
   }
 }

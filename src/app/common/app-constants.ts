@@ -9,6 +9,7 @@ const appConstants = {
         SIGNUP: 'go/signup',
         LOGIN: 'go/login',
         POLLS: 'dashboard',
+        POLL_DETAILS : `pollDetails`
     },
     ui: {
         PAGE_CONTAINER_CLASS: 'pageContent'

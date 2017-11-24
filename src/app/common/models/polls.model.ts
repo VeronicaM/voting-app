@@ -1,9 +1,8 @@
 export interface IPoll {
     _id?: number;
     text: string;
-    options: string[];
-    userId;
-    votes: IVote[];
+    options: string;
+    votes?: IVote[];
 }
 export interface IVote {
     option: string;

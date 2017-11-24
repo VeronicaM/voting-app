@@ -16,6 +16,10 @@ export function reducer(state = initialState, action: any): State {
       return Object.assign({}, state, {
         polls: action.payload
       });
+    case actions.ActionTypes.CREATE_POLL_SUCCESS:
+      return Object.assign({}, state, {
+        polls: [...state.polls, action.payload]
+      });
     default: {
       return state;
     }

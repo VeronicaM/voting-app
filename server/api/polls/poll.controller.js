@@ -73,11 +73,13 @@ exports.show = function(req, res) {
 // Creates a new Thing in the DB
 exports.create = function(req, res) {
     var user = req.user.id;
-    Poll.create({
-        question: "This is a new poll",
-        options: ["pick", "whatever", "you", "want"]
-    }, function(createdPoll, error) {
-        res.send("created new poll" + createdPoll);
+    var newPoll = {
+        text: req.body.text,
+        options: req.body.options.split(',')
+    };
+    newPoll.userId = user;
+    Poll.create(newPoll, function(error, createdPoll) {
+        res.send(createdPoll);
     });
 }
 

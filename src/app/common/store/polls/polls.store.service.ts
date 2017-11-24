@@ -15,4 +15,8 @@ export class PollsStoreService {
     getPolls() {
         this.store.dispatch(new pollsActions.GetPolls());
     }
+
+    createPoll(poll) {
+        this.store.dispatch(new pollsActions.CreatePoll(poll));
+    }
 }

@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+.toast {
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+.success-toast {
+    @extend .toast;
+    background-color: saturate(#419c3e, 5%) !important;
+}
+
+.error-toast {
+    @extend .toast;
+    background-color: saturate(#da3232, 5%) !important;
+}

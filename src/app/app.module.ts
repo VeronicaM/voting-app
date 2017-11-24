@@ -21,13 +21,17 @@ import { SharedModule } from './_shared/shared.module';
 import {AppCommonModule} from './common/common.module';
 import { InterceptedHttp } from './config/http.interceptor';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
+import {NewPollComponent} from './pages/new-poll/new-poll.component';
+import { PollDetailsComponent } from './pages/poll-details/poll-details.component';
 export function getTokenFunction() {
     return localStorage.getItem('token');
 }
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    DashboardComponent,
+    NewPollComponent,
+    PollDetailsComponent
   ],
   imports: [
     BrowserModule,
