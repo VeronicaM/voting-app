@@ -4,10 +4,12 @@ import * as actions from './actions/polls.actions';
 
 export interface State {
   polls: IPoll[];
+  currentPoll: IPoll;
 }
 
 export const initialState: State = {
-  polls: []
+  polls: [],
+  currentPoll: null
 };
 
 export function reducer(state = initialState, action: any): State {
@@ -18,8 +20,12 @@ export function reducer(state = initialState, action: any): State {
       });
     case actions.ActionTypes.CREATE_POLL_SUCCESS:
       return Object.assign({}, state, {
-        polls: [...state.polls, action.payload]
+      polls: [...state.polls, action.payload]
       });
+    case actions.ActionTypes.GET_CURRENT_POLL_SUCCESS:
+      return Object.assign({}, state, {
+        currentPoll: action.payload
+    });
     default: {
       return state;
     }

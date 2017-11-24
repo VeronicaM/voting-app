@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
+import {IPoll} from '../../common';
+import {ActivatedRoute, Router} from '@angular/router';
+import {map, tap} from 'rxjs/Operators';
+import {PollsStoreService} from '../../common';
 @Component({
   selector: 'app-poll-details',
   templateUrl: './poll-details.component.html',
@@ -7,13 +10,17 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class PollDetailsComponent implements OnInit {
-  poll = {
-    text: 'First try',
-    options: 'new, poll, options'
-  };
-  constructor() { }
+   currentPoll: any;
+   id: string;
+   private paramsSubscription;
+   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private pollService: PollsStoreService ) { }
 
   ngOnInit() {
+    this.id = this.route.snapshot.params.id;
+    this.pollService.get(this.id);
+    this.currentPoll = this.pollService.currentPoll$;
   }
-
 }

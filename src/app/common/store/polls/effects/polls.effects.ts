@@ -36,7 +36,7 @@ export class PollsEffects {
         map((action: any) => action.payload),
         switchMap((poll) => this.pollsApi.createPoll(poll)
             .pipe(map(result => {
-                this.notificationService.notifySuccess('Poll successfully created'); 
+                this.notificationService.notifySuccess('Poll successfully created');
                 return  new pollsActions.CreatePollSuccess(result);
             }),
             catchError(error => {
@@ -57,4 +57,27 @@ export class PollsEffects {
              ]);
              return of(poll);
           }));
+  @Effect()
+  getCurrentPoll$ = this.actions$
+            .ofType(pollsActions.ActionTypes.GET_CURRENT_POLL)
+            .pipe(
+              map((action: any) => action.payload),
+                switchMap(currentPollId => this.pollsApi.getCurrentPoll(currentPollId)
+                  .pipe(
+                    map( result => new pollsActions.GetCurrentPollSuccess(result)),
+                    catchError(error => of(new pollsActions.GetCurrentPollError(error)))
+                  )
+              )
+            );
+  @Effect({ dispatch: false })
+  httpErrors$ = this.actions$
+    .ofType(pollsActions.ActionTypes.GET_CURRENT_POLL_ERROR)
+    .pipe(
+      map((action: any) => action.payload),
+        map(error => {
+        this.notificationService.notifyError('Poll not found');
+        this.router.navigate([appConstants.routes.POLLS]);
+        return of(error);
+      })
+    );
 }

@@ -32,4 +32,7 @@ export class PollsApi {
   createPoll(newPoll) {
       return this.http.post<IPoll>('/api/polls', newPoll);
   }
+  getCurrentPoll(id) {
+    return this.http.get<IPoll>('/api/polls/' + id);
+  }
 }

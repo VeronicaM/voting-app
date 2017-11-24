@@ -1,4 +1,4 @@
-<p>
+<p *ngIf="(currentPoll | async) as poll">
     {{poll?.text}}
     <br> {{poll?.options}}
 </p>
