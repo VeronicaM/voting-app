@@ -10,7 +10,7 @@ import {PollsApi} from '../../../services/api/polls.api';
 import {NotificationService} from '../../../services/notification.service';
 import appConstants from '../../../app-constants';
 import * as pollsActions from '../actions/polls.actions';
-
+import {IPoll} from '../../../models';
 @Injectable()
 export class PollsEffects {
   constructor(
@@ -45,7 +45,7 @@ export class PollsEffects {
               })
           )
         ));
-  @Effect({dispatch:false})
+  @Effect({dispatch: false})
   createPollSuccess$ = this.actions$
         .ofType(pollsActions.ActionTypes.CREATE_POLL_SUCCESS)
         .pipe(
@@ -67,6 +67,25 @@ export class PollsEffects {
                     map( result => new pollsActions.GetCurrentPollSuccess(result)),
                     catchError(error => of(new pollsActions.GetCurrentPollError(error)))
                   )
+              )
+            );
+  @Effect()
+  voteOnPoll$ = this.actions$
+            .ofType(pollsActions.ActionTypes.VOTE_ON_POLL)
+            .pipe(
+              map((action: any) => action.payload),
+              switchMap(options => this.pollsApi.voteOnPoll(options)
+                .pipe(
+                  map((result: IPoll) => {
+                    this.notificationService.notifySuccess('You have successfully voted!');
+                    return new pollsActions.VoteOnPollSuccess(result);
+                  }),
+                  catchError((error: any) => {
+                    this.notificationService.notifyError(error.error);
+                     return  of(new pollsActions.VoteOnPollError(error));
+                   }
+                 )
+                )
               )
             );
   @Effect({ dispatch: false })

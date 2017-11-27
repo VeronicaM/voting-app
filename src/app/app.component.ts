@@ -63,7 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.loginStoreService.logout();
     this.loginApi.logout();
     this.isOpen = false;
-    this.router.navigate([appConstants.routes.LOGIN]);
+    this.router.navigate([appConstants.routes.POLLS]);
   }
 
   openSnackBar({ message, action = '', config }) {

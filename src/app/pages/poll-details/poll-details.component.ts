@@ -14,6 +14,7 @@ export class PollDetailsComponent implements OnInit {
    currentPoll: any;
    id: string;
    vote = {selected: '', custom: ''};
+   voted;
    private paramsSubscription;
    constructor(
     private route: ActivatedRoute,
@@ -24,6 +25,7 @@ export class PollDetailsComponent implements OnInit {
     this.id = this.route.snapshot.params.id;
     this.pollService.get(this.id);
     this.currentPoll = this.pollService.currentPoll$;
+    this.pollService.voted$.subscribe((value) => this.voted = value);
   }
   makeChoice(value) {
     this.vote.selected = value;
