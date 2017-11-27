@@ -45,7 +45,7 @@ export class PollsEffects {
               })
           )
         ));
-  @Effect()
+  @Effect({dispatch:false})
   createPollSuccess$ = this.actions$
         .ofType(pollsActions.ActionTypes.CREATE_POLL_SUCCESS)
         .pipe(

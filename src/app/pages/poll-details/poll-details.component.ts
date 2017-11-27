@@ -3,6 +3,7 @@ import {IPoll} from '../../common';
 import {ActivatedRoute, Router} from '@angular/router';
 import {map, tap} from 'rxjs/Operators';
 import {PollsStoreService} from '../../common';
+
 @Component({
   selector: 'app-poll-details',
   templateUrl: './poll-details.component.html',
@@ -12,6 +13,7 @@ import {PollsStoreService} from '../../common';
 export class PollDetailsComponent implements OnInit {
    currentPoll: any;
    id: string;
+   vote = {selected: '', custom: ''};
    private paramsSubscription;
    constructor(
     private route: ActivatedRoute,
@@ -23,4 +25,5 @@ export class PollDetailsComponent implements OnInit {
     this.pollService.get(this.id);
     this.currentPoll = this.pollService.currentPoll$;
   }
+
 }
