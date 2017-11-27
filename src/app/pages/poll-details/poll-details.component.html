@@ -3,12 +3,12 @@
         <h1> {{poll?.text}} </h1>
         <h3> I vote for </h3>
         <div *ngFor="let option of poll.options">
-            <button ngDefaultControl name="selected" [(ngModel)]="vote.selected" mat-raised-button color="accent" (click)="vote.selected = option"> {{option}} </button>
+            <button ngDefaultControl name="selected" [(ngModel)]="vote.selected" mat-raised-button color="accent" (click)="makeChoice(option)"> {{option}} </button>
         </div>
         <button mat-button color="primary" (click)="vote.other = true"> Other </button>
 
         <mat-form-field *ngIf="vote.other">
-            <input matInput #newOption [(ngModel)]="vote.custom" placeholder="Custom option" (keyup.enter)="vote.selected = newOption.value" (blur)="vote.selected = newOption.value" />
+            <input matInput #newOption [(ngModel)]="vote.custom" placeholder="Custom option" (keyup.enter)="makeChoice(newOption.value)" (blur)="makeChoice(newOption.value)" />
         </mat-form-field>
         <div *ngIf="vote.selected"> You voted for {{vote.selected}} </div>
     </div>

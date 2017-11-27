@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var PollSchema = new mongoose.Schema({
     text: String,
     options: [String],
-    votes: [String],
+    votes: [{ id: String, value: String }],
     user_id: {
         type: Number,
         ref: 'User'

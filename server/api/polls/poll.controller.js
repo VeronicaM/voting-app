@@ -54,7 +54,7 @@ function handleError(res, statusCode) {
     };
 }
 
-// Gets a list of Things
+// Gets a list of Polls
 exports.index = function(req, res) {
     return Poll.find()
         .exec()
@@ -62,7 +62,7 @@ exports.index = function(req, res) {
         .catch(handleError(res));
 }
 
-// Gets a single Thing from the DB
+// Gets a single Poll from the DB
 exports.show = function(req, res) {
     return Poll.findById(req.params.id).exec()
         .then(handleEntityNotFound(res))
@@ -70,7 +70,7 @@ exports.show = function(req, res) {
         .catch(handleError(res));
 }
 
-// Creates a new Thing in the DB
+// Creates a new Poll in the DB
 exports.create = function(req, res) {
     var user = req.user.id;
     var newPoll = {
@@ -83,25 +83,38 @@ exports.create = function(req, res) {
     });
 }
 
-// Upserts the given Thing in the DB at the specified ID
-exports.upsert = function(req, res) {
-    if (req.body._id) {
-        delete req.body._id;
-    }
-    var user = req.user.id;
-    var tags = [];
-}
 
-// Updates an existing Thing in the DB
-exports.patch = function(req, res) {
-    if (req.body._id) {
-        delete req.body._id;
+// Updates an existing Poll in the DB
+exports.update = function(req, res) {
+    var id = '';
+    if (req.user) {
+        //if signed in user, get user id
+        id = req.user._id;
+    } else {
+        //else get PC's IP Address
+        try {
+            id = req.header('X-Forwarded-For').split(',')[0];
+        } catch (ex) {
+            id = "anonymous";
+            //  console.log(ex);
+        }
+
     }
-    return Poll.findById(req.params.id).exec()
-        .then(handleEntityNotFound(res))
-        .then(patchUpdates(req.body))
-        .then(respondWithResult(res))
-        .catch(handleError(res));
+    var voteValue = req.body.voteValue;
+    var vote = { id: id, value: voteValue };
+    return Poll.findOneAndUpdate({ _id: req.params.id, "votes.id": { $ne: id } }, { $push: { votes: vote } }, { upsert: true }, function(error, poll) {
+        if (poll) {
+            var addNewOption = poll.options.indexOf(voteValue) == -1;
+            if (addNewOption) {
+                poll.options.push(voteValue);
+                poll.save();
+            }
+            res.status(200).send("You have succesffully voted!");
+        } else {
+            res.status(403).send("You have already voted!");
+        }
+    });
+
 }
 
 

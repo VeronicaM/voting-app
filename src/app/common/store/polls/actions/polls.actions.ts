@@ -10,7 +10,8 @@ export const ActionTypes = {
   CREATE_POLL_FAILURE : type('[Polls] create poll failure'),
   GET_CURRENT_POLL : type('[Polls] get current poll'),
   GET_CURRENT_POLL_SUCCESS : type('[Polls] get current poll success'),
-  GET_CURRENT_POLL_ERROR : type('[Polls] get current poll error')
+  GET_CURRENT_POLL_ERROR : type('[Polls] get current poll error'),
+  VOTE_ON_POLL: type('[Polls] vote on poll' )
 };
 
 export class GetPolls implements Action {
@@ -46,6 +47,10 @@ export class GetPollsSuccess implements Action {
   type = ActionTypes.GET_CURRENT_POLL_ERROR;
   constructor(public payload: any) { }
 }
+export class VoteOnPoll implements Action {
+   type = ActionTypes.VOTE_ON_POLL;
+   constructor(public payload:{pollId:string, voteValue: string}) {}
+}
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -58,4 +63,5 @@ export type Actions
     | CreatePollError
     | GetCurrentPoll
     | GetCurrentPollSuccess
-    | GetCurrentPollError;
+    | GetCurrentPollError
+    | VoteOnPoll;

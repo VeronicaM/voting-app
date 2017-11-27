@@ -35,4 +35,7 @@ export class PollsApi {
   getCurrentPoll(id) {
     return this.http.get<IPoll>('/api/polls/' + id);
   }
+  voteOnPoll(options: {pollId: string, voteValue: string}) {
+      return this.http.put('api/poll/' + options.pollId, options.voteValue);
+  }
 }

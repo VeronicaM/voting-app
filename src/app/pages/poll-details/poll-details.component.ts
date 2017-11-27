@@ -25,5 +25,9 @@ export class PollDetailsComponent implements OnInit {
     this.pollService.get(this.id);
     this.currentPoll = this.pollService.currentPoll$;
   }
+  makeChoice(value) {
+    this.vote.selected = value;
+    this.pollService.vote({pollId: this.id, voteValue: value});
+  }
 
 }

@@ -24,4 +24,7 @@ export class PollsStoreService {
     get(id) {
         this.store.dispatch(new pollsActions.GetCurrentPoll(id));
     }
+    vote(options) {
+        this.store.dispatch(new pollsActions.VoteOnPoll(options));
+    }
 }
