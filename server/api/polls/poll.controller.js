@@ -64,13 +64,28 @@ exports.index = function(req, res) {
 
 // Gets a single Poll from the DB
 exports.show = function(req, res) {
-    return Poll.findById(req.params.id).exec()
-        .then(handleEntityNotFound(res))
-        .then(respondWithResult(res))
-        .catch(handleError(res));
-}
+        Poll.findById(req.params.id, function(err, foundPoll) {
+            if (err) return res.status(500).send("Something went wrong");
+            if (!foundPoll) return res.status(404).send("Poll not found!");
 
-// Creates a new Poll in the DB
+            var id = getUserIP(req);
+
+            if (id !== "anonymous") {
+                var filteredValues = foundPoll.votes.filter(function(el) {
+                    return el.id == id;
+                });
+                var votedValue = filteredValues[0] ? filteredValues[0].value : null;
+                if (votedValue) {
+                    sendVotedPoll(res, foundPoll, votedValue);
+                } else {
+                    res.status(200).send(foundPoll);
+                }
+            } else {
+                res.status(200).send(foundPoll);
+            }
+        });
+    }
+    // Creates a new Poll in the DB
 exports.create = function(req, res) {
     var user = req.user.id;
     var newPoll = {
@@ -86,6 +101,31 @@ exports.create = function(req, res) {
 
 // Updates an existing Poll in the DB
 exports.update = function(req, res) {
+    var id = getUserIP(req);
+
+    var voteValue = req.body.voteValue;
+    var vote = { id: id, value: voteValue };
+    console.log('vote', vote);
+    return Poll.findOneAndUpdate({ _id: req.params.id, "votes.id": { $ne: id } }, { $push: { votes: vote } }, { upsert: true }, function(error, poll) {
+        if (poll) {
+            var addNewOption = poll.options.indexOf(voteValue) == -1;
+            if (addNewOption) {
+                poll.options.push(voteValue);
+                poll.save(function(err, savedPoll) {
+                    if (err) res.status(500).send("Something went wrong");
+                    sendVotedPoll(res, savedPoll, voteValue);
+                });
+            } else {
+                sendVotedPoll(res, poll, voteValue);
+            }
+        } else {
+            res.status(404).send("You have already voted!");
+        }
+    });
+
+}
+
+function getUserIP(req) {
     var id = '';
     if (req.body.user) {
         //if signed in user, get user id
@@ -99,30 +139,14 @@ exports.update = function(req, res) {
             console.log(ex);
         }
     }
-    var voteValue = req.body.voteValue;
-    var vote = { id: id, value: voteValue };
-    console.log('vote', vote);
-    return Poll.findOneAndUpdate({ _id: req.params.id, "votes.id": { $ne: id } }, { $push: { votes: vote } }, { upsert: true }, function(error, poll) {
-        if (poll) {
-            var addNewOption = poll.options.indexOf(voteValue) == -1;
-            if (addNewOption) {
-                poll.options.push(voteValue);
-                poll.save(function(err, savedPoll) {
-                    if (err) res.status(500).send("Something went wrong");
-                    res.status(200).send(savedPoll);
-                });
-            } else {
-                res.status(200).send(poll);
-            }
-
-        } else {
-            res.status(404).send("You have already voted!");
-        }
-    });
-
+    return id;
 }
 
-
+function sendVotedPoll(res, poll, voteValue) {
+    poll.voted = true;
+    poll.voteValue = voteValue;
+    res.status(200).send(poll);
+}
 // Deletes a Poll from the DB
 exports.destroy = function(req, res) {
     return Poll.findById(req.params.id).exec()

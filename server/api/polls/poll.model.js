@@ -9,7 +9,9 @@ var PollSchema = new mongoose.Schema({
     user_id: {
         type: Number,
         ref: 'User'
-    }
+    },
+    voted: Boolean,
+    voteValue: String
 });
 PollSchema.virtual('id').get(function() {
     return this._id;

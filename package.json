@@ -2,6 +2,11 @@
     "name": "frontend",
     "version": "0.0.0",
     "license": "MIT",
+    "prettier": {
+        "trailingComma": "es5",
+        "tabWidth": 2,
+        "singleQuote": true
+    },
     "scripts": {
         "ng": "ng",
         "startC": "ng serve --proxy-config proxy.config.json",
