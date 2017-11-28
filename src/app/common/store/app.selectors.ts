@@ -9,3 +9,4 @@ export const getPollState = (state: AppState) => state.polls;
 
 export const getPolls = createSelector(getPollState, pollSelectors.getPolls);
 export const getCurrentPoll = createSelector(getPollState, pollSelectors.getCurrentPoll);
+export const getMyPolls = createSelector(getPollState, pollSelectors.getMyPolls);

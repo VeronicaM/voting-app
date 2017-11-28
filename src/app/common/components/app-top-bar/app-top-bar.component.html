@@ -1,8 +1,8 @@
 <mat-toolbar class="mat-elevation-z5">
     <div class="left large-screen">
-        <a routerLink="/questionSets" class="logo">
+        <a routerLink="/polls" class="logo">
             <img src="/../../../assets/images/vote.png" alt='logo'>
-            <span class="appName">Voting-App</span>
+            <span class="appName">Voting-App Home</span>
         </a>
         <nav *ngIf="loggedUser">
             <ul class='globalMenuLinks'>
@@ -26,9 +26,9 @@
         </button>
         </div>
         <mat-menu #menu="matMenu" [overlapTrigger]="false">
-            <button mat-menu-item routerLink='/profile'>
+            <button mat-menu-item routerLink='/my-polls'>
         <div class="menu-section">
-              <mat-icon>perm_identity</mat-icon> Profile
+              <mat-icon>perm_identity</mat-icon> My Polls
         </div>
      </button>
         </mat-menu>

@@ -72,7 +72,7 @@ exports.show = function(req, res) {
 
             if (id !== "anonymous") {
                 var filteredValues = foundPoll.votes.filter(function(el) {
-                    return el.id == id;
+                    return el.id.user === id.user || el.id.IP === id.IP;
                 });
                 var votedValue = filteredValues[0] ? filteredValues[0].value : null;
                 if (votedValue) {
@@ -92,7 +92,7 @@ exports.create = function(req, res) {
         text: req.body.text,
         options: req.body.options.split(',')
     };
-    newPoll.userId = user;
+    newPoll.user_id = user;
     Poll.create(newPoll, function(error, createdPoll) {
         res.send(createdPoll);
     });
@@ -106,7 +106,7 @@ exports.update = function(req, res) {
     var voteValue = req.body.voteValue;
     var vote = { id: id, value: voteValue };
     console.log('vote', vote);
-    return Poll.findOneAndUpdate({ _id: req.params.id, "votes.id": { $ne: id } }, { $push: { votes: vote } }, { upsert: true }, function(error, poll) {
+    return Poll.findOneAndUpdate({ _id: req.params.id }, { $push: { votes: vote } }, { upsert: true }, function(error, poll) {
         if (poll) {
             var addNewOption = poll.options.indexOf(voteValue) == -1;
             if (addNewOption) {
@@ -126,18 +126,17 @@ exports.update = function(req, res) {
 }
 
 function getUserIP(req) {
-    var id = '';
+    var id = new Object();
     if (req.body.user) {
         //if signed in user, get user id
-        id = req.body.user._id;
-    } else {
-        //else get PC's IP Address
-        try {
-            id = req.connection.remoteAddress;
-        } catch (ex) {
-            id = "anonymous";
-            console.log(ex);
-        }
+        id.userId = req.body.user._id;
+    }
+    //else get PC's IP Address
+    try {
+        id.IP = req.connection.remoteAddress;
+    } catch (ex) {
+        id.user = "anonymous";
+        console.log(ex);
     }
     return id;
 }

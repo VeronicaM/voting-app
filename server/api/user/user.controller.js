@@ -4,7 +4,7 @@ var User = require('./user.model');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var crypto = require('crypto');
-
+var Poll = require('../polls/poll.model');
 var domain = process.env.NODE_ENV === 'development' ? 'http://localhost:4200/' : process.env.DOMAIN;
 
 function validationError(res, statusCode) {
@@ -75,56 +75,6 @@ exports.destroy = function(req, res) {
         .catch(handleError(res));
 }
 
-/**
- * Change a users password
- */
-exports.changePassword = function(req, res) {
-        var userId = req.user._id;
-        var oldPass = String(req.body.oldPassword);
-        var newPass = String(req.body.newPassword);
-        return User.findById(userId).exec()
-            .then(user => {
-                if (user.authenticate(oldPass)) {
-                    user.password = newPass;
-                    return user.save()
-                        .then(() => {
-                            res.status(204).end();
-                        })
-                        .catch(validationError(res));
-                } else {
-                    return res.status(422).end();
-                }
-            });
-    }
-    /**
-     * Update a user's profile
-     */
-
-exports.updateProfile = function(req, res) {
-
-}
-exports.forgotPass = function(req, res) {
-
-}
-
-function sendEmail(res, email, message, subject) {
-
-}
-exports.resetPassword = function(req, res) {
-    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
-        if (!user) {
-            return res.status(404).end('token not found');
-        }
-        return res.status(200).end('found token');
-    });
-}
-exports.resetPass = function(req, res) {
-
-
-    }
-    /**
-     * Get my info
-     */
 exports.me = function(req, res, next) {
     var userId = req.user._id;
     User.findOne({
@@ -132,13 +82,31 @@ exports.me = function(req, res, next) {
     }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
         if (err) return next(err);
         if (!user) return res.status(401).send('Unauthorized');
+
         res.json(user);
     });
 }
-
-/**
- * Authentication callback
- */
+exports.getPolls = function(req, res, next) {
+        var userId = req.user._id;
+        User.findOne({
+            _id: userId
+        }, function(err, user) {
+            if (err) return next(err);
+            if (!user) return res.status(401).send('Unauthorized');
+            Poll.find({ user_id: userId }, function(err, polls) {
+                if (err) return next(err);
+                var cretedPolls = polls || [];
+                Poll.find({ "votes.id.userId": { $eq: userId } }, function(err, vPolls) {
+                    if (err) return next(err);
+                    var votedPolls = vPolls || [];
+                    res.json({ createdPolls: cretedPolls, votedPolls: votedPolls });
+                });
+            })
+        });
+    }
+    /**
+     * Authentication callback
+     */
 exports.authCallback = function(req, res) {
     res.redirect('/');
 }

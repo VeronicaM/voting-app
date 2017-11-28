@@ -23,6 +23,7 @@ import { InterceptedHttp } from './config/http.interceptor';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {NewPollComponent} from './pages/new-poll/new-poll.component';
 import { PollDetailsComponent } from './pages/poll-details/poll-details.component';
+import { MyPollsComponent } from './pages/my-polls/my-polls.component';
 export function getTokenFunction() {
     return localStorage.getItem('token');
 }
@@ -31,7 +32,8 @@ export function getTokenFunction() {
     AppComponent,
     DashboardComponent,
     NewPollComponent,
-    PollDetailsComponent
+    PollDetailsComponent,
+    MyPollsComponent
   ],
   imports: [
     BrowserModule,

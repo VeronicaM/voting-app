@@ -8,12 +8,9 @@ var router = new app.Router();
 
 
 router.get('/', auth.hasRole('admin'), controller.index);
+router.get('/polls', auth.isAuthenticated(), controller.getPolls);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
-router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
-router.post('/reset-password/:token', controller.resetPass);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
-router.post('/forgot-password', controller.forgotPass);
-router.get('/reset/:token', controller.resetPassword);
 module.exports = router;

@@ -29,6 +29,21 @@ export class PollsEffects {
         .pipe(map(result => new pollsActions.GetPollsSuccess(result)))
       )
     );
+    @Effect()
+    getMyPolls$ = this.actions$
+      .ofType(pollsActions.ActionTypes.GET_MY_POLLS)
+      .pipe(
+        map((action: any) => action.payload),
+        switchMap(() => this.pollsApi.getMyPolls()
+          .pipe(
+            map(result => new pollsActions.GetMyPollsSuccess(result)),
+            catchError(error => {
+                this.notificationService.notifyError('Something went wrong');
+                  return of( new pollsActions.GetMyPollsError(error));
+              })
+          )
+        )
+      );
   @Effect()
   createPoll$ = this.actions$
       .ofType(pollsActions.ActionTypes.CREATE_POLL)

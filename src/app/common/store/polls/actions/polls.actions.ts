@@ -13,7 +13,10 @@ export const ActionTypes = {
   GET_CURRENT_POLL_ERROR : type('[Polls] get current poll error'),
   VOTE_ON_POLL: type('[Polls] vote on poll' ),
   VOTE_ON_POLL_SUCCESS: type('[Polls] vote on poll succsess'),
-  VOTE_ON_POLL_ERROR : type(('Polls vote on poll error' ))
+  VOTE_ON_POLL_ERROR : type('[Polls] vote on poll error' ),
+  GET_MY_POLLS: type('[Polls] get my polls'),
+  GET_MY_POLLS_SUCCESS: type('[Polls] get my polls success'),
+  GET_MY_POLLS_ERROR : type('[Polls] get my polls error')
 };
 
 export class GetPolls implements Action {
@@ -24,10 +27,23 @@ export class GetPollsSuccess implements Action {
     type = ActionTypes.GET_POLLS_SUCCESS;
     constructor(public payload?: IPoll []) { }
   }
+  export class GetMyPolls implements Action {
+    type = ActionTypes.GET_MY_POLLS;
+    constructor(public payload?) { }
+  }
+  export class GetMyPollsSuccess implements Action {
+      type = ActionTypes.GET_MY_POLLS_SUCCESS;
+      constructor(public payload?: IPoll []) { }
+    }
+  export class GetMyPollsError implements Action {
+      type = ActionTypes.GET_MY_POLLS_ERROR;
+      constructor(public payload?) { }
+    }
   export class CreatePoll implements Action {
     type = ActionTypes.CREATE_POLL;
     constructor(public payload?) { }
   }
+
   export class CreatePollSuccess implements Action {
     type = ActionTypes.CREATE_POLL_SUCCESS;
     constructor(public payload: IPoll) { }
@@ -51,7 +67,7 @@ export class GetPollsSuccess implements Action {
 }
 export class VoteOnPoll implements Action {
    type = ActionTypes.VOTE_ON_POLL;
-   constructor(public payload:{pollId:string, voteValue: string}) {}
+   constructor(public payload:{pollId: string, voteValue: string}) {}
 }
 export class VoteOnPollSuccess implements Action {
    type = ActionTypes.VOTE_ON_POLL_SUCCESS;

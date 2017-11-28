@@ -4,6 +4,8 @@ import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import { UserDetailResolver } from './common';
 import { NewPollComponent } from './pages/new-poll/new-poll.component';
 import { PollDetailsComponent } from './pages/poll-details/poll-details.component';
+import { MyPollsComponent } from './pages/my-polls/my-polls.component';
+import { AuthenticationGuard} from './common/guards/authentication.guard';
 
 @NgModule({
   imports: [
@@ -11,6 +13,11 @@ import { PollDetailsComponent } from './pages/poll-details/poll-details.componen
       {path: 'dashboard', component: DashboardComponent, resolve: { userDetails: UserDetailResolver }},
       {path: 'newPoll', component: NewPollComponent, resolve: { userDetails: UserDetailResolver }},
       {path: 'pollDetails/:id', component: PollDetailsComponent, resolve: { userDetails: UserDetailResolver }},
+      {path: 'my-polls',
+       component: MyPollsComponent,
+       resolve: { userDetails: UserDetailResolver },
+       canActivate: [AuthenticationGuard]
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ])
