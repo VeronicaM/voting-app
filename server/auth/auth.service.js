@@ -85,6 +85,7 @@ exports.setTokenCookie = function(req, res) {
         expiresIn: 60 * 60 * 5
     });
     res.cookie('token', token);
+    console.log('redirectDomain', redirectDomain, process.env.NODE_ENV, process.env.DOMAIN);
     res.redirect(`${redirectDomain}/go/${req.user.provider}?token=${token}`);
 }
 exports.isAuthenticated = isAuthenticated;
