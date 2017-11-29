@@ -105,8 +105,12 @@ exports.update = function(req, res) {
 
     var voteValue = req.body.voteValue;
     var vote = { id: id, value: voteValue };
-    console.log('vote', vote);
-    return Poll.findOneAndUpdate({ _id: req.params.id }, { $push: { votes: vote } }, { upsert: true }, function(error, poll) {
+    return Poll.findOneAndUpdate({
+        $and: [
+            { $or: [{ _id: req.params.id }, { "votes.id.userId": { $ne: id.userId } }] },
+            { $or: [{ _id: req.params.id }, { "votes.id.IP": { $ne: id.IP } }] }
+        ]
+    }, { $push: { votes: vote } }, { upsert: true }, function(error, poll) {
         if (poll) {
             var addNewOption = poll.options.indexOf(voteValue) == -1;
             if (addNewOption) {
@@ -133,7 +137,9 @@ function getUserIP(req) {
     }
     //else get PC's IP Address
     try {
-        id.IP = req.connection.remoteAddress;
+        var IP_parts = req.header('referer').split('/');
+        var ip = IP_parts[0] + "//" + IP_parts[2];
+        id.IP = ip;
     } catch (ex) {
         id.user = "anonymous";
         console.log(ex);
