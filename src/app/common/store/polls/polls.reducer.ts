@@ -5,7 +5,7 @@ import * as actions from './actions/polls.actions';
 export interface State {
   polls: IPoll[];
   currentPoll: IPoll;
-  myPolls: IPoll[];
+  myPolls: any;
 }
 
 export const initialState: State = {

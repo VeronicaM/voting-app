@@ -29,21 +29,21 @@ export class PollsApi {
         };
     })));
   }
-  getMyPolls(): Observable<IPoll[]> {
-    return this.http.get<IPoll[]>('/api/users/polls')
-    .pipe(map(polls => polls.map(poll => {
-        return {
-            _id: poll._id,
-            text: poll.text,
-            options: poll.options,
-            votes: poll.votes.map(vote => {
-                return {
-                    option: vote.option,
-                    value: vote.value
-                };
-            })
-        };
-    })));
+  getMyPolls() {
+    return this.http.get('/api/users/polls');
+    // .pipe(map(polls => polls.createdPolls.map(poll => {
+    //     return {
+    //         _id: poll._id,
+    //         text: poll.text,
+    //         options: poll.options,
+    //         votes: poll.votes.map(vote => {
+    //             return {
+    //                 option: vote.option,
+    //                 value: vote.value
+    //             };
+    //         })
+    //     };
+    // })));
   }
   createPoll(newPoll) {
       return this.http.post<IPoll>('/api/polls', newPoll);

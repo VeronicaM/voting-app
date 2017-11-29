@@ -8,12 +8,16 @@ import {PollsStoreService} from '../../common/store';
   encapsulation: ViewEncapsulation.None
 })
 export class MyPollsComponent implements OnInit {
-  myPolls;
+  createdPolls;
+  votedPolls;
   constructor(private pollService: PollsStoreService) { }
 
   ngOnInit() {
     this.pollService.getMyPolls();
-    this.myPolls = this.pollService.myPolls$;
+    this.pollService.myPolls$.subscribe(mypolls => {
+        this.createdPolls = mypolls.createdPolls;
+        this.votedPolls = mypolls.votedPolls;
+    });
   }
 
 }

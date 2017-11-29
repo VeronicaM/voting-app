@@ -33,7 +33,7 @@ export class GetPollsSuccess implements Action {
   }
   export class GetMyPollsSuccess implements Action {
       type = ActionTypes.GET_MY_POLLS_SUCCESS;
-      constructor(public payload?: IPoll []) { }
+      constructor(public payload?: any) { }
     }
   export class GetMyPollsError implements Action {
       type = ActionTypes.GET_MY_POLLS_ERROR;

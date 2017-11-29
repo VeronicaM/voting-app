@@ -5,6 +5,8 @@ var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var crypto = require('crypto');
 var Poll = require('../polls/poll.model');
+var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId
 var domain = process.env.NODE_ENV === 'development' ? 'http://localhost:4200/' : process.env.DOMAIN;
 
 function validationError(res, statusCode) {
@@ -96,7 +98,7 @@ exports.getPolls = function(req, res, next) {
             Poll.find({ user_id: userId }, function(err, polls) {
                 if (err) return next(err);
                 var cretedPolls = polls || [];
-                Poll.find({ "votes.id.userId": { $eq: userId } }, function(err, vPolls) {
+                Poll.find({ "votes.id.userId": "" + userId }, function(err, vPolls) {
                     if (err) return next(err);
                     var votedPolls = vPolls || [];
                     res.json({ createdPolls: cretedPolls, votedPolls: votedPolls });

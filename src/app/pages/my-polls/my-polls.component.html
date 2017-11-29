@@ -1,5 +1,10 @@
 <div class="container">
-    <div *ngFor="let poll of myPolls | async">
+    <h1> Created Polls </h1>
+    <div *ngFor="let poll of createdPolls">
+        <a [routerLink]="['/pollDetails' , poll._id]"> {{poll.text}} </a>
+    </div>
+    <h1> Voted on Polls </h1>
+    <div *ngFor="let poll of votedPolls">
         <a [routerLink]="['/pollDetails' , poll._id]"> {{poll.text}} </a>
     </div>
 </div>

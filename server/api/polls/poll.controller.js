@@ -75,7 +75,6 @@ exports.show = function(req, res) {
                     return id.user !== undefined ? el.id.IP === id.IP || el.id.user === id.user :
                         el.id.IP === id.IP;
                 });
-                console.log("votes on poll ", id.user, id.IP, filteredValues);
                 var votedValue = filteredValues[0] ? filteredValues[0].value : null;
                 if (votedValue) {
                     sendVotedPoll(res, foundPoll, votedValue);
