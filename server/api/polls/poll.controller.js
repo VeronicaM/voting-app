@@ -137,9 +137,10 @@ function getUserIP(req) {
     }
     //else get PC's IP Address
     try {
-        var IP_parts = req.header('referer').split('/');
-        var ip = IP_parts[0] + "//" + IP_parts[2];
-        id.IP = ip;
+        // var IP_parts = req.header('referer').split('/');
+        // var ip = IP_parts[0] + "//" + IP_parts[2];
+        // console.log(req.ip);
+        id.IP = req.ip;
     } catch (ex) {
         id.user = "anonymous";
         console.log(ex);
