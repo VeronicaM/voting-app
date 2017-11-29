@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serverURL: process.env.DOMAIN
+  serverURL: 'https://voting-app-mv.herokuapp.com'
 };
