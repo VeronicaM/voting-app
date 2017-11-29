@@ -70,10 +70,12 @@ exports.show = function(req, res) {
 
             var id = getUserIP(req);
 
-            if (id !== "anonymous") {
+            if (id.user !== "anonymous") {
                 var filteredValues = foundPoll.votes.filter(function(el) {
-                    return el.id.user === id.user || el.id.IP === id.IP;
+                    return id.user !== undefined ? el.id.IP === id.IP || el.id.user === id.user :
+                        el.id.IP === id.IP;
                 });
+                console.log("votes on poll ", id.user, id.IP, filteredValues);
                 var votedValue = filteredValues[0] ? filteredValues[0].value : null;
                 if (votedValue) {
                     sendVotedPoll(res, foundPoll, votedValue);
@@ -137,10 +139,8 @@ function getUserIP(req) {
     }
     //else get PC's IP Address
     try {
-        // var IP_parts = req.header('referer').split('/');
-        // var ip = IP_parts[0] + "//" + IP_parts[2];
-        // console.log(req.ip);
-        id.IP = req.ip;
+        console.log(req.ip);
+        id.IP = req.ip || req.connection.remoteAddress;
     } catch (ex) {
         id.user = "anonymous";
         console.log(ex);
