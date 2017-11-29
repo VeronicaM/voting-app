@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {IPoll} from '../../common';
 import {ActivatedRoute, Router} from '@angular/router';
-import {map, tap} from 'rxjs/Operators';
+import {map, tap} from 'rxjs/operators';
 import {PollsStoreService} from '../../common';
 
 @Component({
