@@ -4,7 +4,7 @@ import * as reducers from '../app.store';
 import * as pollsActions from './actions/polls.actions';
 import { LoginApi } from '../../services/api/login.api';
 import { getPolls, getCurrentPoll, getMyPolls } from '../app.selectors';
-import { tap } from 'rxjs/Operators';
+
 @Injectable()
 export class PollsStoreService {
   polls$ = this.store.select(getPolls);
