@@ -9,23 +9,24 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { Router } from '@angular/router';
-import {
-  PollsEffects
-} from './common/store';
+import { PollsEffects } from './common/store';
 import { reducers } from './common/store/app.store';
-import {LoginModule} from './pages/login/login.module';
+
+import { ChartsModule } from 'ng2-charts-x';
+import { LoginModule } from './pages/login/login.module';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './_shared/shared.module';
-import {AppCommonModule} from './common/common.module';
+import { AppCommonModule } from './common/common.module';
 import { InterceptedHttp } from './config/http.interceptor';
-import {DashboardComponent} from './pages/dashboard/dashboard.component';
-import {NewPollComponent} from './pages/new-poll/new-poll.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { NewPollComponent } from './pages/new-poll/new-poll.component';
 import { PollDetailsComponent } from './pages/poll-details/poll-details.component';
 import { MyPollsComponent } from './pages/my-polls/my-polls.component';
+import { ChartDisplayComponent } from './pages/chart-display/chart-display.component';
 export function getTokenFunction() {
-    return localStorage.getItem('token');
+  return localStorage.getItem('token');
 }
 @NgModule({
   declarations: [
@@ -33,35 +34,35 @@ export function getTokenFunction() {
     DashboardComponent,
     NewPollComponent,
     PollDetailsComponent,
-    MyPollsComponent
+    MyPollsComponent,
+    ChartDisplayComponent,
   ],
   imports: [
     BrowserModule,
     LoginModule,
+    ChartsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
     AppCommonModule,
     StoreModule.forRoot(reducers),
-    !environment.production
-      ? StoreDevtoolsModule.instrument()
-      : [],
-    EffectsModule.forRoot([
-     PollsEffects
-    ]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([PollsEffects]),
     JwtModule.forRoot({
       config: {
-        tokenGetter: getTokenFunction
-      }
+        tokenGetter: getTokenFunction,
+      },
     }),
     AppRoutingModule,
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: InterceptedHttp,
-    multi: true
-  }],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptedHttp,
+      multi: true,
+    },
+  ],
   exports: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

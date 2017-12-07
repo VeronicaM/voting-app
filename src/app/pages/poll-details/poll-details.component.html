@@ -1,5 +1,5 @@
 <div class="container">
-    <div *ngIf="(currentPoll | async) as poll" class="question">
+    <div *ngIf="(currentPoll$ | async) as poll" class="question">
         <h1> {{poll?.text}} </h1>
         <div *ngIf="!poll.voted">
             <h3> I vote for </h3>
@@ -14,6 +14,7 @@
             <div *ngIf="voted"> You voted for {{vote.selected}} </div>
         </div>
         <div *ngIf="poll.voted"> You have voted for this poll. Your vote is {{poll.voteValue}} </div>
+        <app-chart-display [(data)]="poll.votesValues" [(labels)]="poll.optionsValues"></app-chart-display>
     </div>
 
 </div>

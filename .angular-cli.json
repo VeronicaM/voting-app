@@ -6,10 +6,7 @@
     "apps": [{
         "root": "src",
         "outDir": "dist",
-        "assets": [
-            "assets",
-            "favicon.ico"
-        ],
+        "assets": ["assets", "favicon.ico"],
         "index": "index.html",
         "main": "main.ts",
         "polyfills": "polyfills.ts",
@@ -24,7 +21,8 @@
         ],
         "scripts": [
             "../node_modules/moment/min/moment.min.js",
-            "../node_modules/lodash/lodash.js"
+            "../node_modules/lodash/lodash.js",
+            "../node_modules/chart.js/dist/Chart.bundle.min.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {
