@@ -37,24 +37,29 @@ export class PollsApi {
   getCurrentPoll(id): Observable<ICurrentPoll> {
     return this.http.get<IPoll>('/api/polls/' + id).pipe(
       map(currentPoll => {
-        const values = [];
-        currentPoll.votes.forEach(v => {
-          if (!values[v.value]) {
-            values[v.value] = 0;
-          }
-          ++values[v.value];
-        });
-        console.log('poll values ', Object.values(values));
-        console.log('poll options ', Object.keys(values));
-        return {
-          ...currentPoll,
-          votesValues: Object.values(values),
-          optionsValues: Object.keys(values),
-        };
+        return this.parseToCurrentPoll(currentPoll);
       })
     );
   }
   voteOnPoll({ pollId, voteValue, user }) {
-    return this.http.put('api/polls/' + pollId, { voteValue, user });
+    return this.http.put('api/polls/' + pollId, { voteValue, user }).pipe(
+      map(currentPoll => {
+        return this.parseToCurrentPoll(currentPoll);
+      })
+    );
+  }
+  parseToCurrentPoll(currentPoll) {
+    const values = [];
+    currentPoll.votes.forEach(v => {
+      if (!values[v.value]) {
+        values[v.value] = 0;
+      }
+      ++values[v.value];
+    });
+    return {
+      ...currentPoll,
+      votesValues: Object.values(values),
+      optionsValues: Object.keys(values),
+    };
   }
 }

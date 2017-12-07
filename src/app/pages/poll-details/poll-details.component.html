@@ -1,20 +1,23 @@
 <div class="container">
     <div *ngIf="(currentPoll$ | async) as poll" class="question">
         <h1> {{poll?.text}} </h1>
-        <div *ngIf="!poll.voted">
-            <h3> I vote for </h3>
-            <div *ngFor="let option of poll.options">
-                <button [disabled]="voted" ngDefaultControl name="selected" [(ngModel)]="vote.selected" mat-raised-button color="accent" (click)="makeChoice(option)"> {{option}} </button>
-            </div>
-            <button [disabled]="voted" mat-button color="primary" (click)="vote.other = true"> Other </button>
+        <pre>  here {{poll.votesValues | json}} </pre>
+        <div class="wrap">
+            <div *ngIf="!poll.voted">
+                <h3> I vote for </h3>
+                <div *ngFor="let option of poll.options">
+                    <button [disabled]="voted" ngDefaultControl name="selected" [(ngModel)]="vote.selected" mat-raised-button color="accent" (click)="makeChoice(option)"> {{option}} </button>
+                </div>
+                <button [disabled]="voted" mat-button color="primary" (click)="vote.other = true"> Other </button>
 
-            <mat-form-field *ngIf="vote.other">
-                <input matInput #newOption [(ngModel)]="vote.custom" placeholder="Custom option" (keyup.enter)="makeChoice(newOption.value)" (blur)="makeChoice(newOption.value)" />
-            </mat-form-field>
-            <div *ngIf="voted"> You voted for {{vote.selected}} </div>
+                <mat-form-field *ngIf="vote.other">
+                    <input matInput #newOption [(ngModel)]="vote.custom" placeholder="Custom option" (keyup.enter)="makeChoice(newOption.value)" (blur)="makeChoice(newOption.value)" />
+                </mat-form-field>
+                <div *ngIf="voted"> You voted for {{vote.selected}} </div>
+            </div>
+            <div *ngIf="poll.voted"> You have voted for this poll. Your vote is {{poll.voteValue}} </div>
+            <app-chart-display [(data)]="poll.votesValues" [(labels)]="poll.optionsValues"></app-chart-display>
         </div>
-        <div *ngIf="poll.voted"> You have voted for this poll. Your vote is {{poll.voteValue}} </div>
-        <app-chart-display [(data)]="poll.votesValues" [(labels)]="poll.optionsValues"></app-chart-display>
     </div>
 
 </div>

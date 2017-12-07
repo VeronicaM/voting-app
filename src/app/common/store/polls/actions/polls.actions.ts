@@ -71,7 +71,7 @@ export class VoteOnPoll implements Action {
 }
 export class VoteOnPollSuccess implements Action {
   type = ActionTypes.VOTE_ON_POLL_SUCCESS;
-  constructor(public payload: IPoll) {}
+  constructor(public payload: ICurrentPoll) {}
 }
 export class VoteOnPollError implements Action {
   type = ActionTypes.VOTE_ON_POLL_ERROR;

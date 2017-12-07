@@ -9,3 +9,9 @@
 .mat-raised-button {
     margin-bottom: 10px;
 }
+
+.wrap {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+}

@@ -29,10 +29,9 @@ function patchUpdates(patches) {
 function removeEntity(res) {
     return function(entity) {
         if (entity) {
-            return entity.remove()
-                .then(() => {
-                    res.status(204).end();
-                });
+            return entity.remove().then(() => {
+                res.status(204).end();
+            });
         }
     };
 }
@@ -60,45 +59,45 @@ exports.index = function(req, res) {
         .exec()
         .then(respondWithResult(res))
         .catch(handleError(res));
-}
+};
 
 // Gets a single Poll from the DB
 exports.show = function(req, res) {
-        Poll.findById(req.params.id, function(err, foundPoll) {
-            if (err) return res.status(500).send("Something went wrong");
-            if (!foundPoll) return res.status(404).send("Poll not found!");
+    Poll.findById(req.params.id, function(err, foundPoll) {
+        if (err) return res.status(500).send('Something went wrong');
+        if (!foundPoll) return res.status(404).send('Poll not found!');
 
-            var id = getUserIP(req);
+        var id = getUserIP(req);
 
-            if (id.user !== "anonymous") {
-                var filteredValues = foundPoll.votes.filter(function(el) {
-                    return id.user !== undefined ? el.id.IP === id.IP || el.id.user === id.user :
-                        el.id.IP === id.IP;
-                });
-                var votedValue = filteredValues[0] ? filteredValues[0].value : null;
-                if (votedValue) {
-                    sendVotedPoll(res, foundPoll, votedValue);
-                } else {
-                    res.status(200).send(foundPoll);
-                }
+        if (id.user !== 'anonymous') {
+            var filteredValues = foundPoll.votes.filter(function(el) {
+                return id.user !== undefined ?
+                    el.id.IP === id.IP || el.id.user === id.user :
+                    el.id.IP === id.IP;
+            });
+            var votedValue = filteredValues[0] ? filteredValues[0].value : null;
+            if (votedValue) {
+                sendVotedPoll(res, foundPoll, votedValue);
             } else {
                 res.status(200).send(foundPoll);
             }
-        });
-    }
-    // Creates a new Poll in the DB
+        } else {
+            res.status(200).send(foundPoll);
+        }
+    });
+};
+// Creates a new Poll in the DB
 exports.create = function(req, res) {
     var user = req.user.id;
     var newPoll = {
         text: req.body.text,
-        options: req.body.options.split(',')
+        options: req.body.options.split(','),
     };
     newPoll.user_id = user;
     Poll.create(newPoll, function(error, createdPoll) {
         res.send(createdPoll);
     });
-}
-
+};
 
 // Updates an existing Poll in the DB
 exports.update = function(req, res) {
@@ -107,28 +106,34 @@ exports.update = function(req, res) {
     var voteValue = req.body.voteValue;
     var vote = { id: id, value: voteValue };
     return Poll.findOneAndUpdate({
-        $and: [
-            { $or: [{ _id: req.params.id }, { "votes.id.userId": { $ne: id.userId } }] },
-            { $or: [{ _id: req.params.id }, { "votes.id.IP": { $ne: id.IP } }] }
-        ]
-    }, { $push: { votes: vote } }, { upsert: true }, function(error, poll) {
-        if (poll) {
-            var addNewOption = poll.options.indexOf(voteValue) == -1;
-            if (addNewOption) {
-                poll.options.push(voteValue);
-                poll.save(function(err, savedPoll) {
-                    if (err) res.status(500).send("Something went wrong");
-                    sendVotedPoll(res, savedPoll, voteValue);
-                });
+            $and: [{
+                    $or: [
+                        { _id: req.params.id },
+                        { 'votes.id.userId': { $ne: id.userId } },
+                    ],
+                },
+                { $or: [{ _id: req.params.id }, { 'votes.id.IP': { $ne: id.IP } }] },
+            ],
+        }, { $push: { votes: vote } }, { upsert: true },
+        function(error, poll) {
+            if (poll) {
+                var addNewOption = poll.options.indexOf(voteValue) == -1;
+                if (addNewOption) {
+                    poll.options.push(voteValue);
+                    poll.save(function(err, savedPoll) {
+                        if (err) res.status(500).send('Something went wrong');
+                        sendVotedPoll(res, savedPoll, voteValue);
+                    });
+                } else {
+                    poll.votes.push(vote);
+                    sendVotedPoll(res, poll, vote);
+                }
             } else {
-                sendVotedPoll(res, poll, voteValue);
+                res.status(404).send('You have already voted!');
             }
-        } else {
-            res.status(404).send("You have already voted!");
         }
-    });
-
-}
+    );
+};
 
 function getUserIP(req) {
     var id = new Object();
@@ -141,7 +146,7 @@ function getUserIP(req) {
         console.log(req.ip);
         id.IP = req.ip || req.connection.remoteAddress;
     } catch (ex) {
-        id.user = "anonymous";
+        id.user = 'anonymous';
         console.log(ex);
     }
     return id;
@@ -154,8 +159,9 @@ function sendVotedPoll(res, poll, voteValue) {
 }
 // Deletes a Poll from the DB
 exports.destroy = function(req, res) {
-    return Poll.findById(req.params.id).exec()
+    return Poll.findById(req.params.id)
+        .exec()
         .then(handleEntityNotFound(res))
         .then(removeEntity(res))
         .catch(handleError(res));
-}
+};
