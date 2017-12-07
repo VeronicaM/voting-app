@@ -1,7 +1,6 @@
 <div class="container">
     <div *ngIf="(currentPoll$ | async) as poll" class="question">
         <h1> {{poll?.text}} </h1>
-        <pre>  here {{poll.votesValues | json}} </pre>
         <div class="wrap">
             <div *ngIf="!poll.voted">
                 <h3> I vote for </h3>
