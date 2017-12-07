@@ -12,8 +12,8 @@ export interface IVote {
 export interface ICurrentPoll {
   _id?: number;
   text: string;
-  options: string[];
-  optionsValues: string[];
+  options: string;
+  optionsValues: any[];
   votesValues: number[];
   votes?: any[];
 }
