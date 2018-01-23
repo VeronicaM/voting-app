@@ -57,6 +57,9 @@ function handleError(res, statusCode) {
 // Gets a list of Polls
 exports.index = function(req, res) {
     return Poll.find()
+        .sort([
+            ['updatedAt', -1]
+        ])
         .exec()
         .then(respondWithResult(res))
         .catch(handleError(res));

@@ -8,11 +8,11 @@ var PollSchema = new mongoose.Schema({
     votes: [{ id: Object, value: String }],
     user_id: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     },
     voted: Boolean,
-    voteValue: String
-});
+    voteValue: String,
+}, { timestamps: true });
 PollSchema.virtual('id').get(function() {
     return this._id;
 });
