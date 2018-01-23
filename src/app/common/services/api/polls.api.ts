@@ -17,6 +17,7 @@ export class PollsApi {
             _id: poll._id,
             text: poll.text,
             options: poll.options,
+            updatedAt: poll.updatedAt,
             votes: poll.votes.map(vote => {
               return {
                 option: vote.option,

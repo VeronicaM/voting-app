@@ -21,16 +21,16 @@ export class PollsEffects {
   ) {}
 
   @Effect()
-  getPolls$ = this.actions$
-    .ofType(pollsActions.ActionTypes.GET_POLLS)
-    .pipe(
-      map((action: any) => action.payload),
-      switchMap(() =>
-        this.pollsApi
-          .all()
-          .pipe(map(result => new pollsActions.GetPollsSuccess(result)))
+  getPolls$ = this.actions$.ofType(pollsActions.ActionTypes.GET_POLLS).pipe(
+    map((action: any) => action.payload),
+    switchMap(() =>
+      this.pollsApi.all().pipe(
+        map(result => {
+          return new pollsActions.GetPollsSuccess(result);
+        })
       )
-    );
+    )
+  );
   @Effect()
   getMyPolls$ = this.actions$
     .ofType(pollsActions.ActionTypes.GET_MY_POLLS)

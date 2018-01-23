@@ -3,6 +3,7 @@ export interface IPoll {
   text: string;
   options: string;
   votes?: IVote[];
+  updatedAt: Date;
 }
 export interface IVote {
   option: string;

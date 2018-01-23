@@ -1,5 +1,25 @@
 <div class="container">
-    <div *ngFor="let poll of polls | async">
+    <!-- <div *ngFor="let poll of polls | async">
         <a [routerLink]="['/pollDetails' , poll._id]"> {{poll.text}} </a>
+    </div> -->
+    <div class="cards">
+        <mat-card class="poll-card" *ngFor="let poll of polls | async">
+            <mat-card-header>
+                <mat-card-title class="card-header">
+                    <a [routerLink]="['/pollDetails' , poll._id]">  {{poll.text}} </a>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-footer class="card-footer">
+                <div>
+                    <div>
+                        Votes:
+                    </div>
+                    <div>
+                        {{poll.votes.length}}
+                    </div>
+                </div>
+                <div> {{poll.updatedAt | date: " MMM dd, y, hh:mm"}} </div>
+            </mat-card-footer>
+        </mat-card>
     </div>
 </div>
