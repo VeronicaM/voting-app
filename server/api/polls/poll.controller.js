@@ -116,6 +116,7 @@ exports.update = function(req, res) {
             }, { $push: { votes: vote } }, { upsert: true },
             function(error, poll) {
                 if (poll) {
+                    poll.votes.push(vote);
                     var addNewOption = poll.options.indexOf(voteValue) == -1;
                     if (addNewOption) {
                         poll.options.push(voteValue);
@@ -124,7 +125,6 @@ exports.update = function(req, res) {
                             sendVotedPoll(res, savedPoll, voteValue);
                         });
                     } else {
-                        poll.votes.push(vote);
                         sendVotedPoll(res, poll, vote);
                     }
                 } else {

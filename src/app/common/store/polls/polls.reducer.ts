@@ -21,6 +21,8 @@ export function reducer(state = initialState, action: any): State {
       return { ...state, myPolls: action.payload };
     case actions.ActionTypes.CREATE_POLL_SUCCESS:
       return { ...state, polls: [...state.polls, action.payload] };
+    case actions.ActionTypes.GET_CURRENT_POLL:
+      return { ...state, currentPoll: null };
     case actions.ActionTypes.GET_CURRENT_POLL_SUCCESS:
       return { ...state, currentPoll: action.payload };
     case actions.ActionTypes.VOTE_ON_POLL_SUCCESS:
