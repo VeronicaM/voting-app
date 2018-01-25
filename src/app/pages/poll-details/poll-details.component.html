@@ -15,7 +15,7 @@
                 <div *ngIf="voted"> You voted for {{vote.selected}} </div>
             </div>
             <div *ngIf="poll.voted"> You have voted for this poll. Your vote is {{poll.voteValue}} </div>
-            <app-chart-display [(data)]="poll.votesValues" [(labels)]="poll.optionsValues"></app-chart-display>
+            <app-chart-display [(data)]="poll.votesValues" [(labels)]="poll.options"></app-chart-display>
         </div>
     </div>
 </div>
