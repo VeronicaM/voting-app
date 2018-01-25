@@ -1,20 +1,23 @@
-<div class="card-header">
-    Create Poll</div>
-<div class="card-body">
-    <form class="createPollForm" #qsForm='ngForm'>
-        <mat-input-container floatPlaceholder="always">
-            <input placeholder="Question" type="text" maxlength="200" #titleInputHint matInput name="name" required [(ngModel)]="poll.text">
-            <mat-error>Question is required</mat-error>
-        </mat-input-container>
-        <mat-input-container floatPlaceholder="always">
-            <textarea required matInput placeholder="Options separated by comma (ex. yes, no, maybe)" name="description" cols="30" rows="5" [(ngModel)]="poll.options">
+<div class="container">
+    <div>
+        <h1>Create Poll</h1>
+        <div class="card-body">
+            <form class="createPollForm" #qsForm='ngForm'>
+                <mat-input-container floatPlaceholder="always">
+                    <input placeholder="Question" type="text" maxlength="200" #titleInputHint matInput name="name" required [(ngModel)]="poll.text">
+                    <mat-error>Question is required</mat-error>
+                </mat-input-container>
+                <mat-input-container floatPlaceholder="always">
+                    <textarea required matInput placeholder="Options separated by comma (ex. yes, no, maybe)" name="description" cols="30" rows="5" [(ngModel)]="poll.options">
           </textarea>
-            <mat-error>Options are required</mat-error>
-        </mat-input-container>
-    </form>
-</div>
-<div class="card-footer">
-    <button mat-button mat-raised-button [disabled]="!qsForm.valid" class="createButton" (click)="createPoll()">
+                    <mat-error>Options are required</mat-error>
+                </mat-input-container>
+            </form>
+        </div>
+        <div class="card-footer">
+            <button mat-button mat-raised-button [disabled]="!qsForm.valid" class="createButton" (click)="createPoll()">
     Create
     </button>
+        </div>
+    </div>
 </div>

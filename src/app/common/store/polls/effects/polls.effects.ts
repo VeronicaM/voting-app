@@ -49,18 +49,29 @@ export class PollsEffects {
   @Effect()
   createPoll$ = this.actions$.ofType(pollsActions.ActionTypes.CREATE_POLL).pipe(
     map((action: any) => action.payload),
-    switchMap(poll =>
-      this.pollsApi.createPoll(poll).pipe(
-        map(result => {
-          this.notificationService.notifySuccess('Poll successfully created');
-          return new pollsActions.CreatePollSuccess(result);
-        }),
-        catchError(error => {
-          this.notificationService.notifyError('Poll could not be created');
-          return of(new pollsActions.CreatePollError(error));
-        })
-      )
-    )
+    switchMap(poll => {
+      if (poll.options.split(',').length >= 2) {
+        return this.pollsApi.createPoll(poll).pipe(
+          map(result => {
+            this.notificationService.notifySuccess('Poll successfully created');
+            return new pollsActions.CreatePollSuccess(result);
+          }),
+          catchError(error => {
+            this.notificationService.notifyError('Poll could not be created');
+            return of(new pollsActions.CreatePollError(error));
+          })
+        );
+      } else {
+        this.notificationService.notifyError(
+          'Please input at least two comma separated values'
+        );
+        return of(
+          new pollsActions.CreatePollError(
+            'Please input at least two comma separated values'
+          )
+        );
+      }
+    })
   );
   @Effect({ dispatch: false })
   createPollSuccess$ = this.actions$

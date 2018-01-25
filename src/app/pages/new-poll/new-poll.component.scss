@@ -1,22 +1,31 @@
-@import "~../../common/constants";
-// .newPoll {
-//     .createPollForm {
-//         display: flex;
-//         flex-direction: column;
-//         mat-input-container {
-//             margin-bottom: 26px;
-//         }
-//     }
-// }
-// .card-footer {
-//     .createButton {
-//         width: 200px;
-//     }
-//     .createButton:not(:disabled) {
-//         background-color: $accent;
-//     }
-//     mat-progress-spinner {
-//         height: 50px;
-//         align-self: center;
-//     }
-// }
+@import '../../common/constants.scss';
+.container {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &>div {
+        width: 80%;
+    }
+}
+
+.createPollForm {
+    display: flex;
+    flex-direction: column;
+    mat-input-container {
+        margin-bottom: 26px;
+    }
+}
+
+.card-footer {
+    .createButton {
+        width: 200px;
+    }
+    .createButton:not(:disabled) {
+        background-color: $accent;
+    }
+    mat-progress-spinner {
+        height: 50px;
+        align-self: center;
+    }
+}

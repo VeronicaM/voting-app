@@ -1,0 +1,48 @@
+.card-image {
+    height: 30px;
+    width: 30px;
+    margin: 0 auto;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    width: 99%;
+    margin-top: 20px;
+    height: 100%;
+    margin-left: 8px;
+}
+
+.poll-card {
+    width: 235px;
+    height: 130px;
+    background-color: lightblue;
+    margin: 10px;
+}
+
+.card-footer {
+    display: flex !important;
+    justify-content: space-between;
+}
+
+.card-footer>div {
+    padding: 10px;
+    font-size: 13px;
+}
+
+.card-header {
+    height: 84px;
+}
+
+@media screen and (max-width: 1225px) {
+    .poll-card {
+        width: 450px;
+        margin: 10px;
+    }
+}
+
+@media screen and (max-width: 1085px) {
+    .cards {
+        justify-content: center;
+    }
+}

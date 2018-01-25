@@ -13,7 +13,7 @@ import { LoginStoreService } from './common/store';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   isOpen = false;
@@ -27,15 +27,14 @@ export class AppComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private notificationService: NotificationService,
     private loginStoreService: LoginStoreService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.setDocumentTitle();
 
     this.notificationService.subj_notification
       .pipe(takeUntil(this.componentDestroyed))
-      .subscribe(
-      (notification: any) => {
+      .subscribe((notification: any) => {
         this.openSnackBar(notification);
       });
   }
@@ -50,13 +49,17 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   canShowNavigation() {
-    return location.pathname.indexOf(appConstants.routes.LOGIN) === -1 &&
-     location.pathname.indexOf(appConstants.routes.SIGNUP) === -1;
+    return (
+      location.pathname.indexOf(appConstants.routes.LOGIN) === -1 &&
+      location.pathname.indexOf(appConstants.routes.SIGNUP) === -1
+    );
   }
 
   canShowFooter() {
-    return this.loginApi.getCurrentUser() &&
-      location.pathname.indexOf(appConstants.routes.LOGIN) === -1;
+    return (
+      this.loginApi.getCurrentUser() &&
+      location.pathname.indexOf(appConstants.routes.LOGIN) === -1
+    );
   }
 
   logout(): void {
@@ -68,7 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   openSnackBar({ message, action = '', config }) {
     const conf = new MatSnackBarConfig();
-    conf.duration = 8000;
+    conf.duration = 2000;
     conf.extraClasses = [config.extraClass];
     this.snackBar.open(message, action, conf);
   }
@@ -76,17 +79,17 @@ export class AppComponent implements OnInit, OnDestroy {
   setDocumentTitle() {
     this.router.events
       .pipe(
-      filter(event => event instanceof NavigationEnd),
-      map(() => this.activatedRoute),
-      map(route => {
-        while (route.firstChild) {
-          route = route.firstChild;
-        }
-        return route;
-      }),
-      filter(route => route.outlet === 'primary'),
-      mergeMap(route => route.data),
-      takeUntil(this.componentDestroyed)
+        filter(event => event instanceof NavigationEnd),
+        map(() => this.activatedRoute),
+        map(route => {
+          while (route.firstChild) {
+            route = route.firstChild;
+          }
+          return route;
+        }),
+        filter(route => route.outlet === 'primary'),
+        mergeMap(route => route.data),
+        takeUntil(this.componentDestroyed)
       )
       .subscribe(event => {
         const title = event['title'];
