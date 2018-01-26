@@ -1,4 +1,4 @@
-@import "~../../../../common/constants";
+@import '~../../../../common/constants';
 .delimiterLoginMethod {
     border: 1px solid gray;
     padding: 10px;
@@ -40,7 +40,7 @@ form.signupForm {
 }
 
 div.twitter {
-    padding: 30px;
+    padding: 5px 30px 20px 30px;
     button {
         color: #fff;
         background-color: #0ba9f1;

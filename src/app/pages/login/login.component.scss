@@ -1,4 +1,4 @@
-@import "~../../common/constants";
+@import '~../../common/constants';
 .loginComponent {
     display: flex;
     min-height: 100vh;
@@ -6,20 +6,24 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: $primary;
+    background-color: adjust-hue($primary, -80);
     color: white;
     .content {
         margin: auto;
         display: flex;
         align-items: stretch;
         flex-direction: column;
-        padding: 26px;
+        padding: 25px;
+        width: 90%;
+        justify-content: space-between;
         @media (min-width: 700px) {
             flex-direction: row;
         }
     }
     .banner {
-        background-color: rgba(0, 0, 0, 0.32);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         padding: 20px;
         .backToLanding a {
             color: white;
@@ -37,7 +41,7 @@
         margin-bottom: 42px;
         @media (min-width: 700px) {
             margin-bottom: 0px;
-            width: 100%;
+            width: 35%;
             height: 100%;
         }
     }
