@@ -14,7 +14,7 @@
                 </mat-form-field>
                 <div *ngIf="voted"> You voted for {{vote.selected}} </div>
             </div>
-            <div *ngIf="poll.voted"> You have voted for this poll. Your vote is {{poll.voteValue}} </div>
+            <div *ngIf="poll.voted"> You have voted for this poll. Your vote is {{poll.voteValue || vote.selected}} </div>
             <app-chart-display [(data)]="poll.votesValues" [(labels)]="poll.options"></app-chart-display>
         </div>
     </div>
