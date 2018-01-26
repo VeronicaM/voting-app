@@ -1,9 +1,7 @@
 <div class="container">
-    <!-- <div *ngFor="let poll of polls | async">
-        <a [routerLink]="['/pollDetails' , poll._id]"> {{poll.text}} </a>
-    </div> -->
-    <div class="cards">
-        <mat-card class="poll-card" *ngFor="let poll of polls | async">
+
+    <div *ngIf="polls; else nodata" class="cards">
+        <mat-card class="poll-card" *ngFor="let poll of polls">
             <mat-card-header>
                 <mat-card-title class="card-header">
                     <a [routerLink]="['/pollDetails' , poll._id]">  {{poll.text}} </a>
@@ -22,4 +20,8 @@
             </mat-card-footer>
         </mat-card>
     </div>
+    <ng-template #nodata>
+        <div class="message"> No poll has been created yet. Log in and be the first to create one.
+        </div>
+    </ng-template>
 </div>

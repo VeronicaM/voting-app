@@ -19,3 +19,7 @@ body {
     @extend .toast;
     background-color: saturate(#da3232, 5%) !important;
 }
+
+.message {
+    padding: 10px;
+}

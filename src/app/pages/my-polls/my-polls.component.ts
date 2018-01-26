@@ -8,15 +8,21 @@ import { PollsStoreService } from '../../common/store';
   encapsulation: ViewEncapsulation.None,
 })
 export class MyPollsComponent implements OnInit {
-  createdPolls;
-  votedPolls;
+  createdPolls = null;
+  votedPolls = null;
   constructor(private pollService: PollsStoreService) {}
 
   ngOnInit() {
     this.pollService.getMyPolls();
     this.pollService.myPolls$.subscribe(mypolls => {
-      this.createdPolls = mypolls.createdPolls;
-      this.votedPolls = mypolls.votedPolls;
+      if (mypolls.length !== 0) {
+        if (mypolls.createdPolls.length !== 0) {
+          this.createdPolls = mypolls.createdPolls;
+        }
+        if (mypolls.votedPolls.length !== 0) {
+          this.votedPolls = mypolls.votedPolls;
+        }
+      }
     });
   }
   deletePoll(id) {

@@ -1,7 +1,7 @@
 <div class="container">
     <h1> Created Polls </h1>
 
-    <div class="cards">
+    <div *ngIf="createdPolls; else nopolls" class="cards">
         <mat-card class="poll-card" *ngFor="let poll of createdPolls">
             <div><i (click)="deletePoll(poll._id)" class="fa fa-close deleteVote"></i> </div>
             <mat-card-header>
@@ -22,9 +22,11 @@
             </mat-card-footer>
         </mat-card>
     </div>
-
+    <ng-template #nopolls>
+        <div class="message"> You haven't created any poll yet </div>
+    </ng-template>
     <h1> Voted on Polls </h1>
-    <div class="cards">
+    <div *ngIf="votedPolls; else novotes" class="cards">
         <mat-card class="poll-card" *ngFor="let poll of votedPolls">
             <mat-card-header>
                 <mat-card-title class="card-header">
@@ -44,4 +46,7 @@
             </mat-card-footer>
         </mat-card>
     </div>
+    <ng-template #novotes>
+        <div class="message"> You haven't voted on any poll yet </div>
+    </ng-template>
 </div>
