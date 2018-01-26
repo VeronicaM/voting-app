@@ -46,3 +46,13 @@
         justify-content: center;
     }
 }
+
+.deleteVote {
+    float: right;
+    color: #e61212;
+    cursor: pointer;
+    &:hover {
+        color: red;
+        font-size: 20px;
+    }
+}

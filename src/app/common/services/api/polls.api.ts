@@ -35,6 +35,9 @@ export class PollsApi {
   createPoll(newPoll) {
     return this.http.post<IPoll>('/api/polls', newPoll);
   }
+  deletePoll(id) {
+    return this.http.delete(`/api/polls/${id}`);
+  }
   getCurrentPoll(id): Observable<ICurrentPoll> {
     return this.http.get<IPoll>('/api/polls/' + id).pipe(
       map(currentPoll => {

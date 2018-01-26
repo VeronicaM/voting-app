@@ -3,6 +3,7 @@
 
     <div class="cards">
         <mat-card class="poll-card" *ngFor="let poll of createdPolls">
+            <div><i (click)="deletePoll(poll._id)" class="fa fa-close deleteVote"></i> </div>
             <mat-card-header>
                 <mat-card-title class="card-header">
                     <a [routerLink]="['/pollDetails' , poll._id]">  {{poll.text}} </a>

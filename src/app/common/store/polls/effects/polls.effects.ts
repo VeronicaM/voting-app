@@ -97,6 +97,7 @@ export class PollsEffects {
           )
       )
     );
+
   @Effect()
   voteOnPoll$ = this.actions$
     .ofType(pollsActions.ActionTypes.VOTE_ON_POLL)
@@ -117,6 +118,23 @@ export class PollsEffects {
         )
       )
     );
+
+  @Effect()
+  deletePoll$ = this.actions$.ofType(pollsActions.ActionTypes.DELETE_POLL).pipe(
+    map((action: any) => action.payload),
+    switchMap(id =>
+      this.pollsApi.deletePoll(id).pipe(
+        map(() => {
+          this.notificationService.notifySuccess('This poll has been deleted!');
+          return new pollsActions.DeletePollSuccess(id);
+        }),
+        catchError((error: any) => {
+          this.notificationService.notifyError(error.error);
+          return of(new pollsActions.DeletePollError(error));
+        })
+      )
+    )
+  );
   @Effect({ dispatch: false })
   httpErrors$ = this.actions$
     .ofType(pollsActions.ActionTypes.GET_CURRENT_POLL_ERROR)

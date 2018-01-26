@@ -24,6 +24,9 @@ export class PollsStoreService {
   createPoll(poll) {
     this.store.dispatch(new pollsActions.CreatePoll(poll));
   }
+  deletePoll(id) {
+    this.store.dispatch(new pollsActions.DeletePoll(id));
+  }
   get(id) {
     this.store.dispatch(new pollsActions.GetCurrentPoll(id));
   }

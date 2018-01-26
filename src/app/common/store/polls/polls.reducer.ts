@@ -17,6 +17,21 @@ export function reducer(state = initialState, action: any): State {
   switch (action.type) {
     case actions.ActionTypes.GET_POLLS_SUCCESS:
       return { ...state, polls: action.payload };
+    case actions.ActionTypes.DELETE_POLL_SUCCESS:
+      const updateCreatedPolls = state.myPolls.createdPolls.filter(
+        poll => poll._id !== action.payload
+      );
+      const updateVotedPolls = state.myPolls.votedPolls.filter(
+        poll => poll._id !== action.payload
+      );
+      return {
+        ...state,
+        myPolls: {
+          ...state.myPolls,
+          createdPolls: updateCreatedPolls,
+          votedPolls: updateVotedPolls,
+        },
+      };
     case actions.ActionTypes.GET_MY_POLLS_SUCCESS:
       return { ...state, myPolls: action.payload };
     case actions.ActionTypes.CREATE_POLL_SUCCESS:
