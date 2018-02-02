@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IPoll } from '../../common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
-import { PollsStoreService } from '../../common';
+import { PollsStoreService, AuthTokenService } from '../../common';
 
 @Component({
   selector: 'app-poll-details',
@@ -12,29 +12,32 @@ import { PollsStoreService } from '../../common';
 export class PollDetailsComponent implements OnInit {
   currentPoll$: any;
   id: string;
-  isMyPoll: boolean;
+  isMyPoll = false;
   vote = { selected: '', custom: '' };
   private paramsSubscription;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private pollService: PollsStoreService
+    private pollService: PollsStoreService,
+    private auth: AuthTokenService
   ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.pollService.get(this.id);
     this.currentPoll$ = this.pollService.currentPoll$;
-    this.pollService.getMyPolls();
-    this.pollService.myPolls$.subscribe(mypolls => {
-      if (mypolls.length !== 0) {
-        if (mypolls.createdPolls.length !== 0) {
-          this.isMyPoll =
-            mypolls.createdPolls.filter(poll => poll._id === this.id).length !==
-            0;
+    if (this.auth.isLoggedIn()) {
+      this.pollService.getMyPolls();
+      this.pollService.myPolls$.subscribe(mypolls => {
+        if (mypolls.length !== 0) {
+          if (mypolls.createdPolls.length !== 0) {
+            this.isMyPoll =
+              mypolls.createdPolls.filter(poll => poll._id === this.id)
+                .length !== 0;
+          }
         }
-      }
-    });
+      });
+    }
   }
   makeChoice(value) {
     this.vote.selected = value;
