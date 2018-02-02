@@ -29,4 +29,13 @@ export class PollDetailsComponent implements OnInit {
     this.vote.selected = value;
     this.pollService.vote({ pollId: this.id, voteValue: value });
   }
+  sharePoll(question) {
+    let textToTweet = question + '  ' + window.location.href;
+    if (textToTweet.length >= 140) {
+      textToTweet = question.substring(0, 70) + '  ' + window.location.href;
+    }
+    const twtLink =
+      'http://twitter.com/home?status=' + encodeURIComponent(textToTweet);
+    window.open(twtLink, '_blank');
+  }
 }

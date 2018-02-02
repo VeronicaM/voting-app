@@ -1,6 +1,9 @@
 <div class="container">
     <div *ngIf="(currentPoll$ | async) as poll" class="question">
-        <h1> {{poll?.text}} </h1>
+        <div class="questionContainer">
+            <h1> {{poll.text}} </h1>
+            <i class="fa fa-twitter-square twitter" (click)="sharePoll(poll.text)"></i>
+        </div>
         <div class="wrap">
             <div *ngIf="!poll.voted">
                 <h3> I vote for </h3>
@@ -16,6 +19,7 @@
             </div>
             <div *ngIf="poll.voted"> You have voted for this poll. Your vote is {{poll.voteValue || vote.selected}} </div>
             <app-chart-display [(data)]="poll.votesValues" [(labels)]="poll.options"></app-chart-display>
+
         </div>
     </div>
 </div>
